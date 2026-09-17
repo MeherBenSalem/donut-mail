@@ -4,12 +4,17 @@
 *.bak
 *.swp
 *.class
+.env
+.env.*
+!.env.example
+
 # Maven
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
 pom.xml.next
 release.properties
+dependency-reduced-pom.xml
 
 # IntelliJ
 .idea/
@@ -21,9 +26,15 @@ out/
 .classpath
 .settings/
 
-# VSCode
+# VSCode / Cursor
 .vscode/
+.cursor/
 
 # OS files
 .DS_Store
 Thumbs.db
+
+# Agent / local clutter
+*SUMMARY*
+*COMPLETE*
+graphify-out/

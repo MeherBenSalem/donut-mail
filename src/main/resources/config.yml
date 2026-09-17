@@ -3,7 +3,7 @@ storage:
   mysql:
     host: localhost
     port: 3306
-    database: postmaster
+    database: donutmail
     username: root
     password: change_me
     pool-size: 10
@@ -28,4 +28,4 @@ messages:
   usage-voucher-send: "&e/mail voucher send <voucher> <player|all|allonline|name;name>"
   usage-voucher-sendall: "&e/mail voucher sendall <voucher>"
   sent: "&aMail sent to &f%count% &aplayer(s)."
-  reloaded: "&aPostMaster configuration reloaded."
+  reloaded: "&aDonutMail configuration reloaded."

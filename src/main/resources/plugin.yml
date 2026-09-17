@@ -1,21 +1,34 @@
-name: PostMaster
-version: 1.0.7
-main: io.nightbeam.postmaster.PostMasterPlugin
-api-version: '1.21'
+name: DonutMail
+version: 1.1.0
+main: io.nightbeam.donutmail.DonutMailPlugin
+api-version: '26.1'
 folia-supported: true
 authors: [NightBeam]
 description: Lightweight mailbox plugin for online and offline players.
+website: https://github.com/MeherBenSalem/donut-mail
 
 commands:
   mail:
     description: Open mailbox and manage mail.
     usage: /mail
-    aliases: [postmaster]
+    aliases: [donutmail, postmaster]
   mailbox:
     description: Open mailbox GUI.
     usage: /mailbox
 
 permissions:
+  donutmail.use:
+    default: true
+    children:
+      postmaster.use: true
+  donutmail.senditem:
+    default: true
+    children:
+      postmaster.senditem: true
+  donutmail.admin:
+    default: op
+    children:
+      postmaster.admin: true
   postmaster.use:
     default: true
   postmaster.senditem:

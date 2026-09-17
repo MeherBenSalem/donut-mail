@@ -1,4 +1,22 @@
-# PostMaster — Changelog
+# DonutMail — Changelog
+
+## [1.1.0] — 2026-09-17
+
+### Changed
+- Rebranded from **PostMaster** to **DonutMail** (packages, permissions, storage names, Maven artifact `donut-mail`)
+- Target Paper API **26.3** (`26.3.build.8-alpha`); `api-version: '26.1'`
+- Item attachments serialize via `ItemStack.serializeAsBytes()` with legacy Bukkit-stream decode fallback
+- Licensed under **Apache License 2.0**
+
+### Added
+- Automatic migration from `plugins/PostMaster` data, `postmaster.db`, and `postmaster_mail` table
+- Deprecated `PostMasterAPI` shim delegating to `DonutMailAPI`
+- Legacy `postmaster.*` permission acceptance and `/postmaster` command alias
+
+### Notes
+- Requires **Java 25**. Supports Paper 26.1.2–26.3. Folia claimed through 26.2 (Folia 26.3 not published yet).
+
+---
 
 ## [1.0.7] — 2026-09-04
 

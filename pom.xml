@@ -1,21 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.nightbeam</groupId>
-    <artifactId>postmaster</artifactId>
-    <version>1.0.7</version>
+    <artifactId>donut-mail</artifactId>
+    <version>1.1.0</version>
     <packaging>jar</packaging>
 
-    <name>PostMaster</name>
+    <name>DonutMail</name>
     <description>Offline and online mailbox plugin for Paper/Folia.</description>
+    <url>https://github.com/MeherBenSalem/donut-mail</url>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <properties>
         <maven.compiler.source>25</maven.compiler.source>
         <maven.compiler.target>25</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <paper-api.version>26.2.build.121-stable</paper-api.version>
+        <paper-api.version>26.3.build.8-alpha</paper-api.version>
     </properties>
 
     <repositories>
@@ -95,10 +105,9 @@
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <relocations>
-                                <!-- Relocate HikariCP to avoid classpath conflicts with other plugins -->
                                 <relocation>
                                     <pattern>com.zaxxer.hikari</pattern>
-                                    <shadedPattern>io.nightbeam.postmaster.libs.hikari</shadedPattern>
+                                    <shadedPattern>io.nightbeam.donutmail.libs.hikari</shadedPattern>
                                 </relocation>
                             </relocations>
                             <filters>
@@ -122,11 +131,9 @@
                                 <filter>
                                     <artifact>com.mysql:mysql-connector-j</artifact>
                                     <excludes>
-                                        <!-- X DevAPI / X Protocol (document store, not standard JDBC) -->
                                         <exclude>com/mysql/cj/x/**</exclude>
                                         <exclude>com/mysql/cj/xdevapi/**</exclude>
                                         <exclude>com/mysql/cj/protocol/x/**</exclude>
-                                        <!-- HA / load-balancing drivers (not used in plugin context) -->
                                         <exclude>com/mysql/cj/jdbc/ha/**</exclude>
                                     </excludes>
                                 </filter>
@@ -138,7 +145,6 @@
                                 </filter>
                             </filters>
                             <transformers>
-                                <!-- Merge META-INF/services so both SQLite and MySQL JDBC drivers register -->
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                             </transformers>
                         </configuration>

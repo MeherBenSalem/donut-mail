@@ -1,17 +1,15 @@
-# Dual-publish NightBeam mods/plugins to Modrinth + CurseForge on version tags.
-# Copy to each mod repo as: .github/workflows/publish.yml
+# Dual-publish DonutMail to Modrinth + CurseForge on version tags.
 #
-# Org/repo secrets:
+# Secrets:
 #   MODRINTH_TOKEN
 #   CURSEFORGE_TOKEN
 #   CURSEFORGE_API_KEY
 #
-# Repo variables:
-#   MODRINTH_ID
-#   CURSEFORGE_ID
+# Variables (defaults applied in workflow if unset):
+#   MODRINTH_ID   (a4rA3S9T)
+#   CURSEFORGE_ID (1480575)
 #
-# Usage after a release build is ready:
-#   git tag v1.2.3 && git push --tags
+# Usage: git tag v1.1.0 && git push --tags
 
 name: Publish
 
@@ -53,26 +51,20 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "21"
-
-      - uses: gradle/actions/setup-gradle@v4
+          java-version: "25"
+          cache: maven
 
       - name: Build
-        run: |
-          chmod +x gradlew 2>/dev/null || true
-          if [ -f gradlew ]; then ./gradlew build --no-daemon
-          else gradle build --no-daemon
-          fi
+        run: mvn -B -DskipTests package
 
       - name: Find jars
         id: jars
         shell: bash
         run: |
-          mapfile -t JARS < <(find . -type f -path "*/build/libs/*.jar" \
-            ! -name "*-sources.jar" ! -name "*-javadoc.jar" \
-            ! -name "*-dev.jar" ! -name "*-dev-shadow.jar" | head -n 20)
+          mapfile -t JARS < <(find target -maxdepth 1 -type f -name 'donut-mail-*.jar' \
+            ! -name '*-sources.jar' ! -name '*-javadoc.jar' ! -name 'original-*.jar' | head -n 20)
           if [ ${#JARS[@]} -eq 0 ]; then
-            echo "No jars in build/libs" >&2
+            echo "No jars in target/" >&2
             exit 1
           fi
           printf '%s\n' "${JARS[@]}"
@@ -98,25 +90,17 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test -n "${MODRINTH_ID:-}" && test -n "${CURSEFORGE_ID:-}"
+          MODRINTH_ID="${MODRINTH_ID:-a4rA3S9T}"
+          CURSEFORGE_ID="${CURSEFORGE_ID:-1480575}"
+          export MODRINTH_ID CURSEFORGE_ID
+          test -n "${MODRINTH_ID}" && test -n "${CURSEFORGE_ID}"
           node <<'NODE'
           const fs = require('fs');
           const path = require('path');
           const version = process.env.VERSION;
           const jars = process.env.JAR_LIST.split(/\n/).map(s => s.trim()).filter(Boolean);
-          const loaders = new Set();
-          const gvs = new Set();
-          for (const jar of jars) {
-            const n = path.basename(jar).toLowerCase();
-            if (n.includes('neoforge')) loaders.add('neoforge');
-            else if (n.includes('fabric')) loaders.add('fabric');
-            else if (n.includes('quilt')) loaders.add('quilt');
-            else if (n.includes('forge')) loaders.add('forge');
-            else loaders.add('fabric');
-            const m = n.match(/1\.\d+(?:\.\d+)?/);
-            if (m) gvs.add(m[0]);
-          }
-          if (!gvs.size) gvs.add('1.21.1');
+          const loaders = ['paper', 'purpur', 'folia'];
+          const gvs = ['26.1.2', '26.2', '26.3'];
 
           (async () => {
             const fileParts = jars.map((_, i) => `file_${i}`);
@@ -125,9 +109,9 @@ jobs:
               version_number: version,
               changelog: `Release ${version}`,
               dependencies: [],
-              game_versions: [...gvs],
+              game_versions: gvs,
               version_type: 'release',
-              loaders: [...loaders],
+              loaders,
               featured: false,
               status: 'listed',
               project_id: process.env.MODRINTH_ID,
@@ -154,7 +138,7 @@ jobs:
             const gvJson = await gvRes.json();
             const flat = [];
             for (const g of gvJson.data || []) for (const v of g.versions || []) flat.push(v);
-            const gameVersionIds = [...gvs].map((want) => {
+            const gameVersionIds = gvs.map((want) => {
               const hit = flat.find((v) => v.name === want);
               if (!hit) throw new Error('No CF game version for ' + want);
               return hit.id;

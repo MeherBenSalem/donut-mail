@@ -1,9 +1,0 @@
-id: vote_reward
-name: "&6Vote Reward"
-icon: PAPER
-lore:
-  - "&7Thanks for voting!"
-  - "&fClick to claim rewards."
-commands:
-  - "eco give %player% 1000"
-  - "crate give %player% vote 1"

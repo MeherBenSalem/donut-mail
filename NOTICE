@@ -1,0 +1,10 @@
+DonutMail
+Copyright 2026 NightBeam
+
+This product is licensed under the Apache License, Version 2.0.
+
+This product bundles the following third-party libraries (see their licenses):
+
+- HikariCP (Apache License 2.0) — https://github.com/brettwooldridge/HikariCP
+- sqlite-jdbc (Apache License 2.0) — https://github.com/xerial/sqlite-jdbc
+- MySQL Connector/J (Oracle Universal Permissive License / GPL dual-license as distributed by Oracle) — https://dev.mysql.com/doc/connector-j/en/
