@@ -102,6 +102,20 @@ jobs:
           const loaders = ['paper', 'purpur', 'folia'];
           const gvs = ['26.1.2', '26.2', '26.3'];
 
+          function resolveCfVersion(flat, want) {
+            const exact = flat.find((v) => v.name === want);
+            if (exact) return exact.id;
+            const parts = want.split('.');
+            if (parts.length >= 2) {
+              const majorMinor = parts[0] + '.' + parts[1];
+              const mm = flat.find((v) => v.name === majorMinor);
+              if (mm) return mm.id;
+            }
+            const prefix = flat.find((v) => v.name === want || v.name.startsWith(want + '.'));
+            if (prefix) return prefix.id;
+            return null;
+          }
+
           (async () => {
             const fileParts = jars.map((_, i) => `file_${i}`);
             const body = {
@@ -129,8 +143,13 @@ jobs:
               body: form,
             });
             const mrText = await mrRes.text();
-            if (!mrRes.ok) throw new Error('Modrinth ' + mrRes.status + ' ' + mrText.slice(0, 500));
-            console.log('Modrinth OK', mrText.slice(0, 180));
+            if (mrRes.ok) {
+              console.log('Modrinth OK', mrText.slice(0, 180));
+            } else if (mrRes.status === 400 && /already exists|duplicate/i.test(mrText)) {
+              console.log('Modrinth version already exists; continuing to CurseForge');
+            } else {
+              throw new Error('Modrinth ' + mrRes.status + ' ' + mrText.slice(0, 500));
+            }
 
             const gvRes = await fetch('https://api.curseforge.com/v1/games/432/versions', {
               headers: { 'x-api-key': process.env.CURSEFORGE_API_KEY },
@@ -138,11 +157,23 @@ jobs:
             const gvJson = await gvRes.json();
             const flat = [];
             for (const g of gvJson.data || []) for (const v of g.versions || []) flat.push(v);
-            const gameVersionIds = gvs.map((want) => {
-              const hit = flat.find((v) => v.name === want);
-              if (!hit) throw new Error('No CF game version for ' + want);
-              return hit.id;
-            });
+            const gameVersionIds = [];
+            const seen = new Set();
+            for (const want of gvs) {
+              const id = resolveCfVersion(flat, want);
+              if (!id) {
+                console.warn('Skipping unknown CF game version', want);
+                continue;
+              }
+              if (!seen.has(id)) {
+                seen.add(id);
+                gameVersionIds.push(id);
+              }
+            }
+            if (!gameVersionIds.length) {
+              throw new Error('No CurseForge game versions resolved from ' + gvs.join(','));
+            }
+            console.log('CF gameVersionIds', gameVersionIds.join(','));
 
             for (const jar of jars) {
               const meta = {
