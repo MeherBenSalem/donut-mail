@@ -102,86 +102,52 @@ jobs:
           const loaders = ['paper', 'purpur', 'folia'];
           const gvs = ['26.1.2', '26.2', '26.3'];
 
-          function resolveCfVersion(flat, want) {
-            const exact = flat.find((v) => v.name === want);
-            if (exact) return exact.id;
-            const parts = want.split('.');
-            if (parts.length >= 2) {
-              const majorMinor = parts[0] + '.' + parts[1];
-              const mm = flat.find((v) => v.name === majorMinor);
-              if (mm) return mm.id;
-            }
-            const prefix = flat.find((v) => v.name === want || v.name.startsWith(want + '.'));
-            if (prefix) return prefix.id;
-            return null;
-          }
-
           (async () => {
-            const fileParts = jars.map((_, i) => `file_${i}`);
-            const body = {
-              name: version,
-              version_number: version,
-              changelog: `Release ${version}`,
-              dependencies: [],
-              game_versions: gvs,
-              version_type: 'release',
-              loaders,
-              featured: false,
-              status: 'listed',
-              project_id: process.env.MODRINTH_ID,
-              file_parts: fileParts,
-              primary_file: fileParts[0],
-            };
-            const form = new FormData();
-            form.append('data', JSON.stringify(body));
-            for (let i = 0; i < jars.length; i++) {
-              form.append(fileParts[i], new Blob([fs.readFileSync(jars[i])]), path.basename(jars[i]));
-            }
-            const mrRes = await fetch('https://api.modrinth.com/v2/version', {
-              method: 'POST',
-              headers: { Authorization: process.env.MODRINTH_TOKEN },
-              body: form,
-            });
-            const mrText = await mrRes.text();
-            if (mrRes.ok) {
-              console.log('Modrinth OK', mrText.slice(0, 180));
-            } else if (mrRes.status === 400 && /already exists|duplicate/i.test(mrText)) {
-              console.log('Modrinth version already exists; continuing to CurseForge');
+            const existing = await fetch(
+              `https://api.modrinth.com/v2/project/${process.env.MODRINTH_ID}/version?version_number=${encodeURIComponent(version)}`,
+              { headers: { Authorization: process.env.MODRINTH_TOKEN } },
+            );
+            const existingJson = existing.ok ? await existing.json() : [];
+            if (Array.isArray(existingJson) && existingJson.length > 0) {
+              console.log('Modrinth version already exists; skipping upload');
             } else {
-              throw new Error('Modrinth ' + mrRes.status + ' ' + mrText.slice(0, 500));
-            }
-
-            const gvRes = await fetch('https://api.curseforge.com/v1/games/432/versions', {
-              headers: { 'x-api-key': process.env.CURSEFORGE_API_KEY },
-            });
-            const gvJson = await gvRes.json();
-            const flat = [];
-            for (const g of gvJson.data || []) for (const v of g.versions || []) flat.push(v);
-            const gameVersionIds = [];
-            const seen = new Set();
-            for (const want of gvs) {
-              const id = resolveCfVersion(flat, want);
-              if (!id) {
-                console.warn('Skipping unknown CF game version', want);
-                continue;
+              const fileParts = jars.map((_, i) => `file_${i}`);
+              const body = {
+                name: version,
+                version_number: version,
+                changelog: `Release ${version}`,
+                dependencies: [],
+                game_versions: gvs,
+                version_type: 'release',
+                loaders,
+                featured: false,
+                status: 'listed',
+                project_id: process.env.MODRINTH_ID,
+                file_parts: fileParts,
+                primary_file: fileParts[0],
+              };
+              const form = new FormData();
+              form.append('data', JSON.stringify(body));
+              for (let i = 0; i < jars.length; i++) {
+                form.append(fileParts[i], new Blob([fs.readFileSync(jars[i])]), path.basename(jars[i]));
               }
-              if (!seen.has(id)) {
-                seen.add(id);
-                gameVersionIds.push(id);
-              }
+              const mrRes = await fetch('https://api.modrinth.com/v2/version', {
+                method: 'POST',
+                headers: { Authorization: process.env.MODRINTH_TOKEN },
+                body: form,
+              });
+              const mrText = await mrRes.text();
+              if (!mrRes.ok) throw new Error('Modrinth ' + mrRes.status + ' ' + mrText.slice(0, 500));
+              console.log('Modrinth OK', mrText.slice(0, 180));
             }
-            if (!gameVersionIds.length) {
-              throw new Error('No CurseForge game versions resolved from ' + gvs.join(','));
-            }
-            console.log('CF gameVersionIds', gameVersionIds.join(','));
 
             for (const jar of jars) {
               const meta = {
                 changelog: `Release ${version}`,
                 changelogType: 'markdown',
                 displayName: path.basename(jar),
-                gameVersions: gameVersionIds,
-                releaseType: 1,
+                gameVersionNames: gvs,
+                releaseType: 'release',
               };
               const cfForm = new FormData();
               cfForm.append('metadata', JSON.stringify(meta));
