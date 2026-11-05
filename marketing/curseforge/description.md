@@ -1,6 +1,4 @@
-**[Discord](https://discord.gg/TJc3CxR4jK) · [Premium plugins](https://nightbeam.dev/store) · [Support NightBeam](https://nightbeam.dev/support) · [NightBeam Pro](https://nightbeam.dev/memberships) · [All projects](https://nightbeam.dev/projects)**
-
-> **Running a server?** NightBeam's premium plugins are on [BuiltByBit](https://nightbeam.dev/store): NightWatch Pro anti-cheat, Elo ranked leaderboards and more.
+**[Discord](https://discord.gg/TJc3CxR4jK)**
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/Fuzss/modresources/main/pages/commons/headers/about.png" alt="About">
@@ -45,12 +43,6 @@
 | Folia Friendly | Built with Folia compatibility in mind |
 | Modular Architecture | Designed to be extended or integrated with other server systems |
 | Configurable Experience | Storage, vouchers, messages, and GUI colors can be customized |
-
-<p align="center">
-  <a href="https://builtbybit.com/creators/nightbeamstudio.617578/">
-    <img src="https://i.imgur.com/IeI5PsC.png" alt="Upgrade to Premium" width="350">
-  </a>
-</p>
 
 # Mail System
 
@@ -192,11 +184,9 @@ Configure your preferred storage backend through `config.yml`.
 
 If you encounter a bug or have a feature request, please join the Discord community or report it through the appropriate project page.
 
-<p align="center">
-  <a href="https://nightbeam.dev/community">
-    <img src="https://i.imgur.com/xrZhnWD.png" alt="Join the Nightbeam Community">
-  </a>
-</p>
+---
+
+> **Running a server?** NightBeam's premium plugins are on [BuiltByBit](https://nightbeam.dev/store): NightWatch Pro anti-cheat, Elo ranked leaderboards and more.
 
 ---
 
