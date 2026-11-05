@@ -1,0 +1,1 @@
+A lightweight and powerful mailbox plugin for Paper/Folia servers
