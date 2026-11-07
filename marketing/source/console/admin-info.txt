@@ -1,0 +1,7 @@
+Mail » DonutMail 2.0.0
+ Server: Paper 1.21.11-132-c5eb079 (MC: 1.21.11) (Paper)
+ Storage: SQLITE | Server id: server-1eea55e5
+ Economy: MailLabEconomy | PlaceholderAPI: true | NuVotifier: true
+ Mail: 58 (active 28, cash on delivery 0, locked 0)
+ Campaigns: 3 | Codes: 1 | Players: 4
+ Network polling: off (single server)

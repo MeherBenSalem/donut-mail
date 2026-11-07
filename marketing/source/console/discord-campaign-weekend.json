@@ -1,0 +1,29 @@
+{
+  "username": "Server Mail",
+  "allowed_mentions": {
+    "parse": []
+  },
+  "embeds": [
+    {
+      "title": "Mail from Server",
+      "description": "Launch week thanks for playing",
+      "color": 16098851,
+      "footer": {
+        "text": "Claim it in game: /mail"
+      },
+      "timestamp": "2026-11-07T15:15:48.001640521Z",
+      "fields": [
+        {
+          "name": "Rewards",
+          "value": "$100.00",
+          "inline": true
+        },
+        {
+          "name": "Ends",
+          "value": "<t:1794669348:R>",
+          "inline": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+unread=27 waiting=27 parcels=5 cod=1 rewards=4 campaigns=2 streak=4 next=5

@@ -1,0 +1,99 @@
+2026-11-07T15:14:44.336935801Z server-1eea55e5 DAILY player=Moonbeam day=1 streak=1 mail=8f20b8df-b57d-472b-b681-e79eabdf1f7e
+2026-11-07T15:14:47.006726844Z server-1eea55e5 CLAIM mail=8f20b8df-b57d-472b-b681-e79eabdf1f7e kind=DAILY player=Moonbeam stacks=1 left=0 dropped=0 money=0.0 voucher=null commands=0
+2026-11-07T15:14:48.704199911Z server-1eea55e5 STREAK_SET player=Moonbeam streak=3 by=CONSOLE
+2026-11-07T15:14:48.848679036Z server-1eea55e5 DAILY player=Kiri day=1 streak=1 mail=e36f639e-1e26-4198-9fbe-dc24d9a58858
+2026-11-07T15:14:50.495233486Z server-1eea55e5 DAILY player=Willow day=1 streak=1 mail=886f7684-8b2f-438b-95b6-a46fe2bbd8f1
+2026-11-07T15:14:52.163514862Z server-1eea55e5 DAILY player=Draxen day=1 streak=1 mail=47794b6a-7b34-4719-8c1a-b7177af300c9
+2026-11-07T15:14:59.554106236Z server-1eea55e5 SEND mail=79fd210a-10c0-4cfb-9909-a3ad22b9583d from=Willow fromId=4c29776b-3fb8-3724-a102-248a0c646815 to=Moonbeam toId=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d stacks=3 cod=0.0 postage=8.0 note="Wood for the bridge. Thanks for helping!"
+2026-11-07T15:14:59.554619630Z server-1eea55e5 SEND mail=107b5dec-b689-4696-9971-219f11697858 from=Draxen fromId=1616b25c-bcfb-39fc-802e-b2a83552a3ec to=Moonbeam toId=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d stacks=3 cod=0.0 postage=8.0 note="Iron for the farm, as promised."
+2026-11-07T15:15:00.548476133Z server-1eea55e5 SEND mail=2bd10af1-1cae-42f2-9ce6-70ab807184d6 from=Kiri fromId=3255617b-2d34-37da-b1df-bde70d6458b6 to=Moonbeam toId=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d stacks=5 cod=12500.0 postage=10.0 note="Elytra kit as promised. The rockets are on me!"
+2026-11-07T15:15:14.848850546Z server-1eea55e5 SEND mail=8112906d-f8aa-474e-9b85-b215a17ed2b3 from=Willow fromId=4c29776b-3fb8-3724-a102-248a0c646815 to=Moonbeam toId=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d stacks=1 cod=0.0 postage=6.0 note="A shulker of saplings for your garden."
+2026-11-07T15:15:19.598831575Z server-1eea55e5 SEND mail=8a3c7f31-5239-40e8-85d9-d438f606bf68 from=Kiri fromId=3255617b-2d34-37da-b1df-bde70d6458b6 to=Moonbeam toId=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d stacks=4 cod=0.0 postage=9.0 note="Spare gear from the mine trip. Enjoy!"
+2026-11-07T15:15:19.784083676Z server-1eea55e5 DELIVER mail=ec0610c2-6525-43ed-ba1f-69b3d1ef64b0 kind=DELIVERY to=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d from=Server items=0 money=2500.0 voucher=null
+2026-11-07T15:15:19.784218386Z server-1eea55e5 DELIVER mail=4831458a-d93e-4c03-8136-d876b18b36e6 kind=DELIVERY to=4c29776b-3fb8-3724-a102-248a0c646815 from=Server items=0 money=2500.0 voucher=null
+2026-11-07T15:15:20.902374654Z server-1eea55e5 DELIVER mail=8b995e8f-7c42-477f-948d-c0fa0c228580 kind=DELIVERY to=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d from=Server items=1 money=0.0 voucher=null
+2026-11-07T15:15:20.902466071Z server-1eea55e5 DELIVER mail=41509a1a-803d-43d1-93e8-cecb828d63b5 kind=DELIVERY to=4c29776b-3fb8-3724-a102-248a0c646815 from=Server items=1 money=0.0 voucher=null
+2026-11-07T15:15:22.056663892Z server-1eea55e5 DELIVER mail=a133c6df-4427-4122-96e1-a45b196f7ef6 kind=MESSAGE to=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d from=Server items=0 money=0.0 voucher=null
+2026-11-07T15:15:22.056788080Z server-1eea55e5 DELIVER mail=07753227-a243-47c4-8306-0b744d496821 kind=MESSAGE to=4c29776b-3fb8-3724-a102-248a0c646815 from=Server items=0 money=0.0 voucher=null
+2026-11-07T15:15:23.203831614Z server-1eea55e5 DELIVER mail=777dbada-8fa0-4de1-8d43-3411fddf56e1 kind=DELIVERY to=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d from=Server items=1 money=0.0 voucher=null
+2026-11-07T15:15:23.203930244Z server-1eea55e5 DELIVER mail=0f09adfd-69bb-4bb9-93bd-38d560e3a4eb kind=DELIVERY to=4c29776b-3fb8-3724-a102-248a0c646815 from=Server items=1 money=0.0 voucher=null
+2026-11-07T15:15:24.354152482Z server-1eea55e5 SEND mail=a7b0dcf6-dd71-4531-ac6f-e6687b913d96 from=Moonbeam fromId=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d to=Kiri toId=3255617b-2d34-37da-b1df-bde70d6458b6 stacks=1 cod=3200.0 postage=0.0 note="via API"
+2026-11-07T15:15:26.769935875Z server-1eea55e5 PAY_START mail=a7b0dcf6-dd71-4531-ac6f-e6687b913d96 buyer=Kiri price=3200.0
+2026-11-07T15:15:26.800418466Z server-1eea55e5 PAID mail=a7b0dcf6-dd71-4531-ac6f-e6687b913d96 buyer=Kiri seller=Moonbeam price=3200.0 tax=0.0 receipt=fb6f7219-5c7f-4e04-ae2d-11927ff26569
+2026-11-07T15:15:26.849194862Z server-1eea55e5 CLAIM mail=a7b0dcf6-dd71-4531-ac6f-e6687b913d96 kind=PARCEL player=Kiri stacks=1 left=0 dropped=0 money=0.0 voucher=null commands=0
+2026-11-07T15:15:28.404372328Z server-1eea55e5 DELIVER mail=060b83f8-a103-4452-93b6-0a6d1cb6ddbd kind=MESSAGE to=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d from=Server items=0 money=0.0 voucher=null
+2026-11-07T15:15:28.404470531Z server-1eea55e5 DELIVER mail=2d102c47-6f1b-4e32-87d4-f70ce3c70f2a kind=MESSAGE to=4c29776b-3fb8-3724-a102-248a0c646815 from=Server items=0 money=0.0 voucher=null
+2026-11-07T15:15:29.552626009Z server-1eea55e5 DELIVER mail=9f5dd5a9-e3e7-44e1-97e4-d1e2e6493ac3 kind=DELIVERY to=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d from=Server items=1 money=0.0 voucher=null
+2026-11-07T15:15:29.552732989Z server-1eea55e5 DELIVER mail=b4cefe79-747b-47f8-9ef6-3f71172917f0 kind=DELIVERY to=4c29776b-3fb8-3724-a102-248a0c646815 from=Server items=1 money=0.0 voucher=null
+2026-11-07T15:15:30.701938028Z server-1eea55e5 SEND mail=37fa3926-d88a-481b-a923-5f23db829eef from=Moonbeam fromId=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d to=Kiri toId=3255617b-2d34-37da-b1df-bde70d6458b6 stacks=1 cod=480.0 postage=0.0 note="via API"
+2026-11-07T15:15:33.118811108Z server-1eea55e5 RETURN mail=37fa3926-d88a-481b-a923-5f23db829eef reason=DECLINED by=Kiri from=Kiri to=Moonbeam stacks=1 return=aad5e560-970e-42dd-bb93-f36d298b5ee6
+2026-11-07T15:15:34.651475629Z server-1eea55e5 DELIVER mail=37a2b4df-247d-4e2c-9ab5-aa83f1b223c1 kind=DELIVERY to=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d from=Server items=1 money=0.0 voucher=null
+2026-11-07T15:15:34.651582813Z server-1eea55e5 DELIVER mail=3fd7414a-ebe1-499f-983c-bcfc624f4b81 kind=DELIVERY to=4c29776b-3fb8-3724-a102-248a0c646815 from=Server items=1 money=0.0 voucher=null
+2026-11-07T15:15:35.802638658Z server-1eea55e5 DELIVER mail=09d15768-7b14-449c-86c0-e9227c7c4d99 kind=MESSAGE to=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d from=Server items=0 money=0.0 voucher=null
+2026-11-07T15:15:35.802747005Z server-1eea55e5 DELIVER mail=30741f46-51be-4221-a551-ec1747d41f47 kind=MESSAGE to=4c29776b-3fb8-3724-a102-248a0c646815 from=Server items=0 money=0.0 voucher=null
+2026-11-07T15:15:36.951466886Z server-1eea55e5 DELIVER mail=071785bf-0144-4a19-bfd2-d285cc3af30f kind=DELIVERY to=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d from=Server items=1 money=0.0 voucher=null
+2026-11-07T15:15:36.951567870Z server-1eea55e5 DELIVER mail=f8f389cf-ab71-4b11-8cbd-473be56ef856 kind=DELIVERY to=4c29776b-3fb8-3724-a102-248a0c646815 from=Server items=1 money=0.0 voucher=null
+2026-11-07T15:15:38.101392810Z server-1eea55e5 SEND mail=53eade82-d2ff-4cd0-bdfd-a8451ae0a428 from=Moonbeam fromId=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d to=Kiri toId=3255617b-2d34-37da-b1df-bde70d6458b6 stacks=1 cod=6000.0 postage=0.0 note="via API"
+2026-11-07T15:15:40.507154210Z server-1eea55e5 PAY_START mail=53eade82-d2ff-4cd0-bdfd-a8451ae0a428 buyer=Kiri price=6000.0
+2026-11-07T15:15:40.548416600Z server-1eea55e5 PAID mail=53eade82-d2ff-4cd0-bdfd-a8451ae0a428 buyer=Kiri seller=Moonbeam price=6000.0 tax=0.0 receipt=7af9bd95-2ab6-4cc5-83ab-25fa6dc4c59e
+2026-11-07T15:15:40.598190860Z server-1eea55e5 CLAIM mail=53eade82-d2ff-4cd0-bdfd-a8451ae0a428 kind=PARCEL player=Kiri stacks=1 left=0 dropped=0 money=0.0 voucher=null commands=0
+2026-11-07T15:15:42.152502707Z server-1eea55e5 DELIVER mail=fbd59634-e027-4a99-bdc4-c9eef9eaa792 kind=DELIVERY to=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d from=Server items=0 money=500.0 voucher=null
+2026-11-07T15:15:42.152672391Z server-1eea55e5 DELIVER mail=754bca8c-45ce-4823-bfaf-a02af0e8470c kind=DELIVERY to=4c29776b-3fb8-3724-a102-248a0c646815 from=Server items=0 money=500.0 voucher=null
+2026-11-07T15:15:43.301002210Z server-1eea55e5 DELIVER mail=d05f2bb0-2739-4152-96aa-0b7a3c389405 kind=MESSAGE to=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d from=Server items=0 money=0.0 voucher=null
+2026-11-07T15:15:43.301111559Z server-1eea55e5 DELIVER mail=9117299c-e33c-4e54-bddc-3ceb0a5c9ef5 kind=MESSAGE to=4c29776b-3fb8-3724-a102-248a0c646815 from=Server items=0 money=0.0 voucher=null
+2026-11-07T15:15:44.451605082Z server-1eea55e5 DELIVER mail=ac9e9cdc-2666-4533-b884-8dcc28567793 kind=DELIVERY to=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d from=Server items=1 money=0.0 voucher=null
+2026-11-07T15:15:44.451709675Z server-1eea55e5 DELIVER mail=74eba0ab-ceef-4931-94ba-afc878eb6627 kind=DELIVERY to=4c29776b-3fb8-3724-a102-248a0c646815 from=Server items=1 money=0.0 voucher=null
+2026-11-07T15:15:45.602948242Z server-1eea55e5 DELIVER mail=539a0136-993d-4d0e-9dff-3ee4f4be43eb kind=DELIVERY to=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d from=Server items=0 money=250.0 voucher=null
+2026-11-07T15:15:45.603083772Z server-1eea55e5 DELIVER mail=6495de2e-b3ba-4927-a0ab-ecc37cfe750d kind=DELIVERY to=4c29776b-3fb8-3724-a102-248a0c646815 from=Server items=0 money=250.0 voucher=null
+2026-11-07T15:15:46.751956594Z server-1eea55e5 CAMPAIGN name=spring by=CONSOLE items=0 money=250.0 voucher=null starts=0 ends=1794323746750 existingOnly=false
+2026-11-07T15:15:48.001071951Z server-1eea55e5 CAMPAIGN name=launch by=CONSOLE items=0 money=100.0 voucher=null starts=0 ends=1794669348000 existingOnly=false
+2026-11-07T15:15:49.599082344Z server-1eea55e5 VOTE player=Moonbeam service=ExampleVotes mail=210f3dee-7401-4b47-be36-40f945a698c5
+2026-11-07T15:15:49.599599934Z server-1eea55e5 DELIVER mail=210f3dee-7401-4b47-be36-40f945a698c5 kind=VOTE to=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d from=ExampleVotes items=1 money=10.0 voucher=null commands=0
+2026-11-07T15:15:50.798166482Z server-1eea55e5 VOTE player=Moonbeam service=SampleServers mail=e811e7ac-49ca-4764-8e3e-4d65dc8813cd
+2026-11-07T15:15:50.798572708Z server-1eea55e5 DELIVER mail=e811e7ac-49ca-4764-8e3e-4d65dc8813cd kind=VOTE to=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d from=SampleServers items=1 money=10.0 voucher=null commands=0
+2026-11-07T15:15:52.047804478Z server-1eea55e5 VOTE player=Moonbeam service=DemoList mail=42e104c7-3554-4723-b666-b44b0be131d7
+2026-11-07T15:15:52.048234165Z server-1eea55e5 DELIVER mail=42e104c7-3554-4723-b666-b44b0be131d7 kind=VOTE to=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d from=DemoList items=1 money=10.0 voucher=null commands=0
+2026-11-07T15:15:53.252657763Z server-1eea55e5 CODE_CREATE code=SPRING by=CONSOLE uses=2 perPlayer=1 expires=0 items=0 money=50.0 voucher=null
+2026-11-07T15:16:07.518372084Z server-1eea55e5 DAILY player=Moonbeam day=4 streak=4 mail=eeec0a86-f506-4af4-b029-8a77a4814d0b
+2026-11-07T15:17:43.018570965Z server-1eea55e5 PAY_START mail=2bd10af1-1cae-42f2-9ce6-70ab807184d6 buyer=Moonbeam price=12500.0
+2026-11-07T15:17:43.050810692Z server-1eea55e5 PAID mail=2bd10af1-1cae-42f2-9ce6-70ab807184d6 buyer=Moonbeam seller=Kiri price=12500.0 tax=0.0 receipt=6a7d1351-1bde-4a63-80d5-fb806ee726df
+2026-11-07T15:17:43.100488203Z server-1eea55e5 CLAIM mail=2bd10af1-1cae-42f2-9ce6-70ab807184d6 kind=PARCEL player=Moonbeam stacks=5 left=0 dropped=0 money=0.0 voucher=null commands=0
+2026-11-07T15:17:56.255313369Z server-1eea55e5 REDEEM code=SPRING player=Moonbeam mail=b43f0843-eb70-4f73-8ec4-5cf394cd99a5
+2026-11-07T15:18:22.605362446Z server-1eea55e5 SEND mail=82dc4bf3-dd5f-4f2f-bdfe-350294f997e5 from=Moonbeam fromId=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d to=Kiri toId=3255617b-2d34-37da-b1df-bde70d6458b6 stacks=4 cod=2500.0 postage=9.0 note="Mending and Unbreaking III, plus the pearls as agreed."
+2026-11-07T15:18:26.575100291Z server-1eea55e5 PAY_START mail=82dc4bf3-dd5f-4f2f-bdfe-350294f997e5 buyer=Kiri price=2500.0
+2026-11-07T15:18:26.597693897Z server-1eea55e5 PAID mail=82dc4bf3-dd5f-4f2f-bdfe-350294f997e5 buyer=Kiri seller=Moonbeam price=2500.0 tax=0.0 receipt=afde2e48-f1bf-482d-8b2f-5ac0966d8efb
+2026-11-07T15:18:26.651468806Z server-1eea55e5 CLAIM mail=82dc4bf3-dd5f-4f2f-bdfe-350294f997e5 kind=PARCEL player=Kiri stacks=4 left=0 dropped=0 money=0.0 voucher=null commands=0
+2026-11-07T15:18:49.900858337Z server-1eea55e5 SEND mail=0fdcb935-4fbd-4a46-a27f-25158d187462 from=Moonbeam fromId=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d to=Kiri toId=3255617b-2d34-37da-b1df-bde70d6458b6 stacks=2 cod=1500.0 postage=7.0 note=""
+2026-11-07T15:18:52.072429212Z server-1eea55e5 PAY_START mail=0fdcb935-4fbd-4a46-a27f-25158d187462 buyer=Kiri price=1500.0
+2026-11-07T15:18:52.101786983Z server-1eea55e5 PAID mail=0fdcb935-4fbd-4a46-a27f-25158d187462 buyer=Kiri seller=Moonbeam price=1500.0 tax=0.0 receipt=b1668c07-f571-46f8-a65f-97954133ced4
+2026-11-07T15:18:52.153394585Z server-1eea55e5 CLAIM mail=0fdcb935-4fbd-4a46-a27f-25158d187462 kind=PARCEL player=Kiri stacks=2 left=0 dropped=0 money=0.0 voucher=null commands=0
+2026-11-07T15:19:30.998056553Z server-1eea55e5 SEND mail=f8e9bddd-f47e-4ba7-8ae8-46edde73a46b from=Moonbeam fromId=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d to=Kiri toId=3255617b-2d34-37da-b1df-bde70d6458b6 stacks=1 cod=400.0 postage=6.0 note=""
+2026-11-07T15:19:34.058035111Z server-1eea55e5 RETURN mail=f8e9bddd-f47e-4ba7-8ae8-46edde73a46b reason=DECLINED by=Kiri from=Kiri to=Moonbeam stacks=1 return=6ca13d49-9026-49a2-9598-7e1678300b67
+2026-11-07T15:19:54.101969139Z server-1eea55e5 SEND mail=b8d5640c-d08e-41a6-a510-6b28e2a7d398 from=Moonbeam fromId=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d to=Willow toId=4c29776b-3fb8-3724-a102-248a0c646815 stacks=1 cod=0.0 postage=6.0 note=""
+2026-11-07T15:20:28.248357505Z server-1eea55e5 SEND mail=97bd245c-217c-4e99-b1c1-e1cf8c0d75c4 from=Kiri fromId=3255617b-2d34-37da-b1df-bde70d6458b6 to=Moonbeam toId=f2f3b0de-4b7f-38c8-98d1-5e1ed0ff7b4d stacks=1 cod=0.0 postage=6.0 note=""
+2026-11-07T15:20:32.256210678Z server-1eea55e5 CAMPAIGN name=weekend by=CONSOLE items=0 money=250.0 voucher=null starts=0 ends=1794237632255 existingOnly=false
+2026-11-07T15:20:37.288606192Z server-1eea55e5 CAMPAIGN_CLAIM name=weekend player=Moonbeam copy=21ad896a-5643-40a7-b9d4-ffcdca11cac6
+2026-11-07T15:20:37.300728569Z server-1eea55e5 CLAIM mail=21ad896a-5643-40a7-b9d4-ffcdca11cac6 kind=CAMPAIGN player=Moonbeam stacks=0 left=0 dropped=0 money=250.0 voucher=null commands=0
+2026-11-07T15:20:37.302318604Z server-1eea55e5 CAMPAIGN_CLAIM name=launch player=Moonbeam copy=135dd442-2094-4c80-8f73-c839e2f077ed
+2026-11-07T15:20:37.350105434Z server-1eea55e5 CLAIM mail=135dd442-2094-4c80-8f73-c839e2f077ed kind=CAMPAIGN player=Moonbeam stacks=0 left=0 dropped=0 money=100.0 voucher=null commands=0
+2026-11-07T15:20:37.351867939Z server-1eea55e5 CAMPAIGN_CLAIM name=spring player=Moonbeam copy=d8eff354-854f-4ab7-8470-dc0963496c0e
+2026-11-07T15:20:37.401347905Z server-1eea55e5 CLAIM mail=d8eff354-854f-4ab7-8470-dc0963496c0e kind=CAMPAIGN player=Moonbeam stacks=0 left=0 dropped=0 money=250.0 voucher=null commands=0
+2026-11-07T15:20:37.447655072Z server-1eea55e5 CLAIM mail=6ca13d49-9026-49a2-9598-7e1678300b67 kind=RETURN player=Moonbeam stacks=1 left=0 dropped=0 money=0.0 voucher=null commands=0
+2026-11-07T15:20:37.501470111Z server-1eea55e5 CLAIM mail=b1668c07-f571-46f8-a65f-97954133ced4 kind=RECEIPT player=Moonbeam stacks=0 left=0 dropped=0 money=1500.0 voucher=null commands=0
+2026-11-07T15:20:37.547619826Z server-1eea55e5 CLAIM mail=afde2e48-f1bf-482d-8b2f-5ac0966d8efb kind=RECEIPT player=Moonbeam stacks=0 left=0 dropped=0 money=2500.0 voucher=null commands=0
+2026-11-07T15:20:37.598439444Z server-1eea55e5 CLAIM mail=539a0136-993d-4d0e-9dff-3ee4f4be43eb kind=DELIVERY player=Moonbeam stacks=0 left=0 dropped=0 money=250.0 voucher=null commands=0
+2026-11-07T15:20:37.650871460Z server-1eea55e5 CLAIM mail=ac9e9cdc-2666-4533-b884-8dcc28567793 kind=DELIVERY player=Moonbeam stacks=1 left=0 dropped=0 money=0.0 voucher=null commands=0
+2026-11-07T15:20:37.701737882Z server-1eea55e5 CLAIM mail=d05f2bb0-2739-4152-96aa-0b7a3c389405 kind=MESSAGE player=Moonbeam stacks=0 left=0 dropped=0 money=0.0 voucher=null commands=0
+2026-11-07T15:20:37.747539976Z server-1eea55e5 CLAIM mail=fbd59634-e027-4a99-bdc4-c9eef9eaa792 kind=DELIVERY player=Moonbeam stacks=0 left=0 dropped=0 money=500.0 voucher=null commands=0
+2026-11-07T15:20:37.797617861Z server-1eea55e5 CLAIM mail=7af9bd95-2ab6-4cc5-83ab-25fa6dc4c59e kind=RECEIPT player=Moonbeam stacks=0 left=0 dropped=0 money=6000.0 voucher=null commands=0
+2026-11-07T15:20:37.847909495Z server-1eea55e5 CLAIM mail=071785bf-0144-4a19-bfd2-d285cc3af30f kind=DELIVERY player=Moonbeam stacks=1 left=0 dropped=0 money=0.0 voucher=null commands=0
+2026-11-07T15:20:37.898475197Z server-1eea55e5 CLAIM mail=09d15768-7b14-449c-86c0-e9227c7c4d99 kind=MESSAGE player=Moonbeam stacks=0 left=0 dropped=0 money=0.0 voucher=null commands=0
+2026-11-07T15:20:37.947542137Z server-1eea55e5 CLAIM mail=37a2b4df-247d-4e2c-9ab5-aa83f1b223c1 kind=DELIVERY player=Moonbeam stacks=1 left=0 dropped=0 money=0.0 voucher=null commands=0
+2026-11-07T15:20:38.003021556Z server-1eea55e5 CLAIM mail=aad5e560-970e-42dd-bb93-f36d298b5ee6 kind=RETURN player=Moonbeam stacks=1 left=0 dropped=0 money=0.0 voucher=null commands=0
+2026-11-07T15:20:38.047587085Z server-1eea55e5 CLAIM mail=9f5dd5a9-e3e7-44e1-97e4-d1e2e6493ac3 kind=DELIVERY player=Moonbeam stacks=1 left=0 dropped=0 money=0.0 voucher=null commands=0
+2026-11-07T15:20:38.101280299Z server-1eea55e5 CLAIM mail=060b83f8-a103-4452-93b6-0a6d1cb6ddbd kind=MESSAGE player=Moonbeam stacks=0 left=0 dropped=0 money=0.0 voucher=null commands=0
+2026-11-07T15:20:38.147413500Z server-1eea55e5 CLAIM mail=fb6f7219-5c7f-4e04-ae2d-11927ff26569 kind=RECEIPT player=Moonbeam stacks=0 left=0 dropped=0 money=3200.0 voucher=null commands=0
+2026-11-07T15:20:38.197811871Z server-1eea55e5 CLAIM mail=777dbada-8fa0-4de1-8d43-3411fddf56e1 kind=DELIVERY player=Moonbeam stacks=1 left=0 dropped=0 money=0.0 voucher=null commands=0
+2026-11-07T15:20:38.253454115Z server-1eea55e5 CLAIM mail=a133c6df-4427-4122-96e1-a45b196f7ef6 kind=MESSAGE player=Moonbeam stacks=0 left=0 dropped=0 money=0.0 voucher=null commands=0
+2026-11-07T15:20:38.297731193Z server-1eea55e5 CLAIM mail=8b995e8f-7c42-477f-948d-c0fa0c228580 kind=DELIVERY player=Moonbeam stacks=1 left=0 dropped=0 money=0.0 voucher=null commands=0
+2026-11-07T15:20:38.357333699Z server-1eea55e5 CLAIM mail=ec0610c2-6525-43ed-ba1f-69b3d1ef64b0 kind=DELIVERY player=Moonbeam stacks=0 left=0 dropped=0 money=2500.0 voucher=null commands=0
