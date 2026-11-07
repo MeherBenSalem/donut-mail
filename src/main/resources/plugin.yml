@@ -1,34 +1,51 @@
 name: DonutMail
-version: 1.1.0
+version: '${project.version}'
 main: io.nightbeam.donutmail.DonutMailPlugin
-api-version: '26.1'
+api-version: '1.20'
 folia-supported: true
 authors: [NightBeam]
-description: Lightweight mailbox plugin for online and offline players.
+description: Mailbox, parcels, cash on delivery, campaigns, daily rewards and reward codes for Paper and Folia.
 website: https://github.com/MeherBenSalem/donut-mail
+softdepend: [Vault, VaultUnlocked, PlaceholderAPI, Votifier]
 
 commands:
   mail:
-    description: Open mailbox and manage mail.
-    usage: /mail
+    description: Open your mailbox, send parcels and manage mail.
+    usage: /mail [send <player>|claimall|redeem <code>|block <player>|help]
     aliases: [donutmail, postmaster]
   mailbox:
-    description: Open mailbox GUI.
+    description: Open your mailbox.
     usage: /mailbox
 
 permissions:
   donutmail.use:
+    description: Open the mailbox, claim mail, block players and toggle parcels.
     default: true
-    children:
-      postmaster.use: true
   donutmail.senditem:
+    description: Send parcels to other players.
     default: true
-    children:
-      postmaster.senditem: true
+  donutmail.cod:
+    description: Send cash-on-delivery parcels.
+    default: true
+  donutmail.redeem:
+    description: Redeem reward codes.
+    default: true
+  donutmail.daily:
+    description: Receive daily rewards.
+    default: true
+  donutmail.bypass.limits:
+    description: Ignore parcel cooldown, daily limit and mailbox limits.
+    default: op
+  donutmail.postage.exempt:
+    description: Send parcels without paying postage.
+    default: op
   donutmail.admin:
+    description: Staff commands (give, announce, campaigns, codes, vouchers, admin tools, reload).
     default: op
     children:
-      postmaster.admin: true
+      donutmail.bypass.limits: true
+      donutmail.postage.exempt: true
+  # PostMaster-era nodes, still accepted.
   postmaster.use:
     default: true
   postmaster.senditem:

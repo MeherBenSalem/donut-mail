@@ -1,0 +1,193 @@
+# ─────────────────────────────────────────────────────────────────────────────
+#  DonutMail  –  gui.yml
+#
+#  Layout and text of every menu. Edit and run /mail reload.
+#  Slots count from 0 (top-left) to 53 (bottom-right of a 6-row menu). A slot range is written '9-44'.
+#  Each button: slot, material, name, lore, and optionally model (custom model data, 0 = none).
+#  Text: MiniMessage, &-codes and &#RRGGBB hex, as in messages.yml. Lore is gray and not italic
+#  unless you color it. Titles should stay short (about 32 characters).
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Empty slots. Set the material to AIR to leave them empty.
+filler:
+  material: GRAY_STAINED_GLASS_PANE
+  model: 0
+
+titles:
+  inbox: '&6ᴍᴀɪʟʙᴏx &8• &6ɪɴʙᴏx'
+  parcels: '&6ᴍᴀɪʟʙᴏx &8• &6ᴘᴀʀᴄᴇʟꜱ'
+  sent: '&6ᴍᴀɪʟʙᴏx &8• &6ꜱᴇɴᴛ'
+  rewards: '&6ᴍᴀɪʟʙᴏx &8• &6ʀᴇᴡᴀʀᴅꜱ'
+  preview: '&6ᴍᴀɪʟ &8• &6%sender%'
+  cod: '&6ᴄᴀꜱʜ ᴏɴ ᴅᴇʟɪᴠᴇʀʏ'
+  compose: '&6ꜱᴇɴᴅ ᴀ ᴘᴀʀᴄᴇʟ'
+  admin: '&cꜱᴛᴀꜰꜰ &8• &c%player%'
+
+# ── Mailbox ─────────────────────────────────────────────────────────────────
+mailbox:
+  # Where mail is listed. The Rewards tab uses its own slots below the calendar.
+  content-slots: '9-44'
+  rewards-content-slots: '18-44'
+  empty-slot: 22
+  tabs:
+    inbox:
+      slot: 2
+      material: CHEST
+      name: '&6Inbox'
+      lore: ['Messages, deliveries, payments', 'and server announcements', '', '&e%count% &7waiting']
+    parcels:
+      slot: 3
+      material: ENDER_CHEST
+      name: '&6Parcels'
+      lore: ['Items other players sent you', '', '&e%count% &7waiting']
+    profile:
+      slot: 4
+      material: PLAYER_HEAD
+      name: '&6%player%''s mailbox'
+      lore: ['&7New: &f%unread%', '&7Parcels: &f%parcels% &8(%cod% cash on delivery)', '&7Rewards: &f%rewards%', '&7Daily streak: &f%streak% day(s)']
+    sent:
+      slot: 5
+      material: WRITABLE_BOOK
+      name: '&6Sent'
+      lore: ['Parcels you sent and', 'what happened to them']
+    rewards:
+      slot: 6
+      material: SUNFLOWER
+      name: '&6Rewards'
+      lore: ['Daily rewards, codes and votes', '', '&e%count% &7waiting']
+  selected-line: '&a▶ Selected'
+  click-line: '&eClick to open'
+  buttons:
+    previous:
+      slot: 45
+      material: ARROW
+      name: '&ePrevious Page'
+      lore: ['Page %page%/%pages%']
+    next:
+      slot: 53
+      material: ARROW
+      name: '&eNext Page'
+      lore: ['Page %page%/%pages%']
+    claim-all:
+      slot: 47
+      material: HOPPER
+      name: '&aClaim All'
+      lore: ['Claim everything on this tab', 'that fits in your inventory', '', '&7Cash-on-delivery parcels are skipped']
+    compose:
+      slot: 49
+      material: FEATHER
+      name: '&6Send a Parcel'
+      lore: ['Send items to any player,', 'online or offline', '', '&7Or: &f/mail send <player>']
+    settings:
+      slot: 51
+      material: COMPARATOR
+      name: '&eParcel Settings'
+      lore: ['&7Accepting parcels: %state%', '&7Blocked players: &f%blocked%', '', '&eClick to toggle', '&7/mail block <player> to block one']
+    redeem:
+      slot: 51
+      material: NAME_TAG
+      name: '&dRedeem a Code'
+      lore: ['Have a reward code?', '', '&eClick and type it in chat', '&7Or: &f/mail redeem <code>']
+  state-on: '&aYes'
+  state-off: '&cNo'
+  empty:
+    material: MINECART
+    name: '&7Nothing here yet'
+    lore: ['Mail you receive shows up here']
+  empty-sent:
+    material: MINECART
+    name: '&7No parcels sent yet'
+    lore: ['Click &6Send a Parcel &7to send one']
+
+# How a mail looks in the lists. %sender% is who sent it, %player% the other player of a parcel.
+entries:
+  message: { material: PAPER, name: '&fMessage from &e%sender%' }
+  delivery: { material: CHEST, name: '&6Delivery from &e%sender%' }
+  parcel: { material: CHEST, name: '&6Parcel from &e%sender%' }
+  cod: { material: ENDER_CHEST, name: '&6Parcel from &e%sender% &8- &6%price%' }
+  paid: { material: CHEST, name: '&aPaid parcel from &e%sender%' }
+  receipt: { material: EMERALD, name: '&aPayment from &e%sender%' }
+  return: { material: BARREL, name: '&eReturned parcel' }
+  campaign: { material: NETHER_STAR, name: '&bAnnouncement from &e%sender%' }
+  daily: { material: SUNFLOWER, name: '&6Daily Reward' }
+  code: { material: NAME_TAG, name: '&dCode &f%sender%' }
+  vote: { material: DIAMOND, name: '&bVote Reward' }
+  reward: { material: GOLD_INGOT, name: '&6Reward from &e%sender%' }
+  sent: { material: CHEST, name: '&7Parcel to &f%player%' }
+
+lore:
+  separator: '&8————————————————'
+  from: '&7From: &f%sender%'
+  to: '&7To: &f%player%'
+  message-line: '&f%line%'
+  items: '&7Items: &f%count% &7stack(s)'
+  item-line: ' &8• &f%amount%x %item%'
+  item-more: ' &8• &7and %count% more'
+  unreadable: ' &8• &c%count% unreadable item(s)'
+  money: '&7Money: &a%money%'
+  voucher: '&7Voucher: %voucher%'
+  commands: '&7Bonus rewards: &f%count%'
+  cod: '&7Cash on delivery: &6%price%'
+  received: '&7Received: &f%time% ago'
+  sent-at: '&7Sent: &f%time% ago'
+  expires: '&7Expires in: &f%time%'
+  campaign-ends: '&7Available for: &f%time%'
+  new: '&b● New'
+  locked: '&eBeing claimed...'
+  status-waiting: '&eWaiting to be claimed'
+  status-cod: '&6Waiting for payment'
+  status-paid: '&aPaid &6%price%'
+  status-claimed: '&aClaimed'
+  status-returned: '&cReturned &7(%reason%&7)'
+  status-expired: '&7Expired'
+  status-deleted: '&cRemoved by staff'
+  click-claim: '&aLeft-click to claim'
+  click-preview: '&eRight-click to preview'
+  click-cod: '&6Click to preview, then pay or decline'
+  click-read: '&aClick to mark as read'
+  click-view: '&eClick to view'
+  click-remove: '&cShift-right-click to remove'
+
+# The daily calendar on the Rewards tab. Icons and reward text come from daily.yml.
+calendar:
+  slots: [10, 11, 12, 13, 14, 15, 16]
+  name: '&6Day %day%'
+  claimed: '&a✔ Collected'
+  today: '&eToday''s reward: in your mailbox'
+  today-waiting: '&eToday''s reward: arrives when you join'
+  upcoming: '&7Come back in &f%days% &7day(s)'
+  streak-line: '&7Streak: &f%streak% &7day(s)'
+  disabled:
+    material: GRAY_DYE
+    name: '&7Daily rewards are off'
+
+# ── Parcel preview and cash on delivery ─────────────────────────────────────
+preview:
+  item-slots: '0-44'
+  buttons:
+    back: { slot: 45, material: ARROW, name: '&eBack', lore: ['Return to your mailbox'] }
+    info: { slot: 49, material: PAPER, name: '&6From &e%sender%' }
+    claim: { slot: 51, material: LIME_DYE, name: '&aClaim', lore: ['Take everything that fits', 'in your inventory'] }
+    read: { slot: 51, material: LIME_DYE, name: '&aMark as Read', lore: ['Archive this message'] }
+    pay: { slot: 47, material: EMERALD_BLOCK, name: '&aPay %price% &aand Collect', lore: ['&7Your balance: &f%balance%', '&7After paying: &f%after%', '', '&7The money goes to &e%sender%&7.', '&aClick to pay'] }
+    pay-poor: { slot: 47, material: COAL_BLOCK, name: '&cYou need %price%', lore: ['&7Your balance: &f%balance%'] }
+    cod-info: { slot: 49, material: GOLD_INGOT, name: '&6Cash on Delivery: %price%', lore: ['&7From: &f%sender%', '', '&7Look at the items above.', '&7Pay to keep them, or decline', '&7and they go back to the sender.'] }
+    decline: { slot: 51, material: REDSTONE_BLOCK, name: '&cDecline', lore: ['&7The items go back to &e%sender%&7.', '&7You pay nothing.', '', '&cClick to decline'] }
+    recall: { slot: 51, material: HOPPER_MINECART, name: '&eTake Back', lore: ['&7Return this parcel to your mailbox.', '&7Only while it is not claimed or paid.'] }
+    remove: { slot: 53, material: LAVA_BUCKET, name: '&cRemove (staff)', lore: ['&7Player parcels go back to the sender.', '&7Other mail is deleted.', '', '&cShift-click to remove'] }
+
+# ── Compose a parcel ────────────────────────────────────────────────────────
+compose:
+  item-slots: '0-44'
+  buttons:
+    cancel: { slot: 45, material: BARRIER, name: '&cCancel', lore: ['Your items are returned'] }
+    recipient: { slot: 47, material: PLAYER_HEAD, name: '&eTo: &f%player%', lore: ['&eClick to choose another player'] }
+    recipient-none: { slot: 47, material: PLAYER_HEAD, name: '&eChoose a Recipient', lore: ['&eClick and type a name'] }
+    note: { slot: 48, material: OAK_SIGN, name: '&eNote', lore: ['%note%', '', '&eClick to write a note'] }
+    note-empty: '&7No note'
+    send: { slot: 49, material: LIME_CONCRETE, name: '&aSend Parcel', lore: ['&7To: &f%player%', '&7Items: &f%count% &7stack(s)', '%cod%', '%postage%', '', '&aClick to send'] }
+    cod: { slot: 50, material: GOLD_NUGGET, name: '&6Cash on Delivery', lore: ['&7Price: %price%', '', '&7The recipient pays this price', '&7to accept the items, or declines', '&7and they come back to you.', '', '&eLeft-click to set the price', '&eRight-click to remove it'] }
+    cod-off: '&7none'
+    cod-line: '&7Cash on delivery: &6%price%'
+    postage-line: '&7Postage: &6%fee%'
+    help: { slot: 53, material: BOOK, name: '&bHow Parcels Work', lore: ['Put items in the top 5 rows.', 'The recipient gets them in their', 'mailbox, even when offline.', '', '&7Unclaimed parcels come back', '&7after &f%days% &7day(s).'] }

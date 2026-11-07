@@ -1,0 +1,57 @@
+# ─────────────────────────────────────────────────────────────────────────────
+#  DonutMail daily rewards
+#
+#  On a player's first join of the day, the reward for their streak day is delivered to the
+#  Rewards tab of their mailbox. Players need donutmail.daily (everyone by default).
+#
+#  Each day can give items, money (Vault), console commands and a voucher:
+#    items:    ['DIAMOND:3', 'GOLDEN_APPLE']        material[:amount]
+#    money:    250
+#    commands: ['crate key give %player% vote 1']  %player% and %uuid% are replaced
+#    voucher:  vote_reward                          a file in plugins/DonutMail/vouchers/
+#  'display' is what the calendar in the Rewards tab shows for the day.
+# ─────────────────────────────────────────────────────────────────────────────
+
+enabled: true
+
+# Time zone for "a new day" (IANA name such as Europe/Berlin). Empty = the server's time zone.
+timezone: ''
+
+# Missing a day starts the streak again at day 1. When false, the streak only pauses.
+reset-on-miss: true
+
+# After the last day: LOOP starts again at day 1, LAST keeps giving the last day's reward.
+after-last-day: LOOP
+
+days:
+  1:
+    icon: IRON_INGOT
+    display: ['<white>16x Iron Ingot']
+    items: ['IRON_INGOT:16']
+  2:
+    icon: GOLD_INGOT
+    display: ['<white>16x Gold Ingot', '<green>$250']
+    items: ['GOLD_INGOT:16']
+    money: 250
+  3:
+    icon: EXPERIENCE_BOTTLE
+    display: ['<white>32x Bottle o'' Enchanting']
+    items: ['EXPERIENCE_BOTTLE:32']
+  4:
+    icon: GOLDEN_APPLE
+    display: ['<white>4x Golden Apple', '<green>$500']
+    items: ['GOLDEN_APPLE:4']
+    money: 500
+  5:
+    icon: DIAMOND
+    display: ['<white>3x Diamond']
+    items: ['DIAMOND:3']
+  6:
+    icon: EMERALD
+    display: ['<green>$1,500']
+    money: 1500
+  7:
+    icon: NETHERITE_SCRAP
+    display: ['<white>2x Netherite Scrap', '<white>1x Diamond Block', '<green>$2,500']
+    items: ['NETHERITE_SCRAP:2', 'DIAMOND_BLOCK:1']
+    money: 2500

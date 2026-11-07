@@ -1,0 +1,228 @@
+# ─────────────────────────────────────────────────────────────────────────────
+#  DonutMail  –  messages.yml
+#
+#  Everything DonutMail says in chat, titles and the action bar. Menus are in gui.yml.
+#  Edit and run /mail reload. New messages are added to this file automatically.
+#
+#  Formatting (mix freely):
+#    &0–&f, &l, &o, &n, &m, &k, &r     legacy codes
+#    &#RRGGBB                           hex colors
+#    <gold>, <#ffaa00>, <gradient:#f9d423:#ff4e50>text</gradient>, <bold>   MiniMessage
+#    <click:run_command:'/mail'>text</click>, <hover:show_text:'tip'>text</hover>
+#  Inside <click> and <hover> use MiniMessage colors (a legacy &-code resets and would end the click).
+#
+#  Placeholders like %player% are inserted as plain text: names and notes typed by players can never
+#  add colors or click events.
+# ─────────────────────────────────────────────────────────────────────────────
+
+prefix: '&6&lMail &8» '
+
+general:
+  no-permission: '&cYou do not have permission to do that.'
+  player-only: '&cOnly players can use this command.'
+  unknown-player: '&c%player% has never played on this server.'
+  reloaded: '&aDonutMail reloaded (config.yml, messages.yml, gui.yml, daily.yml and vouchers).'
+  economy-missing: '&cMoney features need Vault and an economy plugin.'
+  storage-error: '&cThe mailbox is unavailable right now. Nothing was changed; please try again.'
+  busy: '&7One moment...'
+  disabled: '&cThat is turned off on this server.'
+  input-timeout: '&7No answer, so nothing was changed.'
+  cancel-word: cancel
+  clear-word: clear
+
+mailbox:
+  claimed: '&aClaimed %what%&a.'
+  what-items: '&f%count% &astack(s)'
+  what-money: '&6%money%'
+  what-rewards: 'your rewards'
+  what-message: 'the message'
+  partial: '&eYour inventory is full: &f%left% &estack(s) stay in your mailbox.'
+  inventory-full: '&cYour inventory is full. Make room and try again.'
+  dropped: '&eYour inventory was full, so &f%count% &estack(s) were dropped at your feet.'
+  gone: '&cThat mail is no longer there.'
+  expired: '&eThat mail has expired.'
+  claim-all: '&aClaimed &f%count% &amail.'
+  claim-all-partial: '&aClaimed &f%count% &amail. &eYour inventory is full; the rest stays in your mailbox.'
+  claim-all-none: '&7Nothing to claim here.'
+  voucher-missing: '&cThe voucher &f%voucher% &cno longer exists. Ask staff for help; the mail stays in your mailbox.'
+  unreadable: '&c%count% item(s) cannot be read on this server version and stay in your mailbox.'
+  needs-economy: '&cThis mail contains money, and the economy is not available right now. It stays in your mailbox.'
+  recovered: '&7A claim interrupted by a restart was finished.'
+
+parcels:
+  disabled: '&cParcels are turned off on this server.'
+  usage-send: '&cUsage: /mail send <player> [cod <price>]'
+  compose-opened: '&7Put the items for &f%player% &7in the menu, then press Send.'
+  sent: '&aParcel sent to &f%player%&a.'
+  sent-cod: '&aParcel sent to &f%player% &afor &6%price% &a(cash on delivery).'
+  empty: '&cPut at least one item in the parcel.'
+  no-recipient: '&cChoose who receives the parcel first.'
+  self: '&cYou cannot send a parcel to yourself.'
+  blocked: '&c%player% is not accepting parcels from you.'
+  refusing: '&c%player% is not accepting parcels right now.'
+  cooldown: '&cWait %seconds%s before sending another parcel.'
+  daily-limit: '&cYou already sent %limit% parcels today.'
+  recipient-limit: '&cYou already have %limit% parcels waiting in %player%''s mailbox.'
+  mailbox-full: '&c%player%''s mailbox is full.'
+  blacklisted: '&c%item% &ccannot be sent by mail.'
+  postage-insufficient: '&cSending this parcel costs &6%fee%&c.'
+  postage-paid: '&7Postage: &6%fee%'
+  cancelled: '&7Parcel cancelled. Your items were returned.'
+  failed: '&cThe parcel could not be sent. Your items were returned.'
+  returned-to-mailbox: '&eYour inventory was full, so &f%count% &estack(s) went to your mailbox.'
+  prompt-recipient: '&eType the name of the player who gets the parcel. Type &6cancel &eto go back.'
+  prompt-note: '&eType a short note (up to %max% characters). Type &6clear &eto remove it or &6cancel &eto go back.'
+  prompt-price: '&eType the cash-on-delivery price (for example &6500 &eor &62.5k&e). Type &60 &eto remove it or &6cancel &eto go back.'
+  note-too-long: '&cThe note can be at most %max% characters.'
+  price-invalid: '&cThe price must be between &6%min% &cand &6%max%&c.'
+  cod-disabled: '&cCash on delivery is turned off on this server.'
+  recalled: '&aYour parcel to &f%player% &ais back in your mailbox.'
+  recall-failed: '&cThat parcel was already claimed, paid or returned.'
+  recall-disabled: '&cParcels cannot be taken back on this server.'
+
+cod:
+  paid: '&aYou paid &6%price% &ato &f%player%&a. The items are yours.'
+  not-enough: '&cYou need &6%price% &cto accept this parcel.'
+  declined: '&eYou declined the parcel from &f%player%&e. It went back to them.'
+  not-waiting: '&cThat parcel is no longer waiting for payment.'
+  payment-failed: '&cThe payment could not be completed. Your money was returned.'
+
+notify:
+  new-mail: '&6✉ &fNew mail from &e%sender%&f. <click:run_command:''/mail''><hover:show_text:''<gray>Open your mailbox''><green>[Open mailbox]</green></hover></click>'
+  new-parcel: '&6✉ &e%sender% &fsent you a parcel. <click:run_command:''/mail parcels''><hover:show_text:''<gray>Open your parcels''><green>[Open]</green></hover></click>'
+  new-cod: '&6✉ &e%sender% &fsent you a parcel for &6%price% &f(cash on delivery). <click:run_command:''/mail parcels''><hover:show_text:''<gray>Preview it before you pay''><green>[Preview]</green></hover></click>'
+  new-reward: '&6★ &fA reward is waiting in your mailbox. <click:run_command:''/mail rewards''><hover:show_text:''<gray>Open your rewards''><green>[Open rewards]</green></hover></click>'
+  title: '&6New Mail'
+  subtitle: '&fFrom &e%sender%'
+  action-bar: '&6✉ &fNew mail from &e%sender% &7- /mail'
+  summary-header: '&6&lMailbox &8» &fWelcome back, &e%player%&f!'
+  summary-unread: ' &8• &e%count% &fnew mail'
+  summary-parcels: ' &8• &e%count% &fparcel(s) waiting'
+  summary-cod: ' &8• &6%count% &fcash-on-delivery parcel(s) to pay or decline'
+  summary-rewards: ' &8• &a%count% &freward(s) to claim'
+  summary-campaigns: ' &8• &b%count% &fserver announcement(s)'
+  summary-open: ' <click:run_command:''/mail''><hover:show_text:''<gray>Click to open''><green><bold>[Open mailbox]</bold></green></hover></click>'
+  paid: '&a✔ &e%player% &fpaid &6%price% &ffor your parcel. <click:run_command:''/mail''><hover:show_text:''<gray>Collect the money''><green>[Collect]</green></hover></click>'
+  returned: '&e↩ &fYour parcel to &e%player% &fcame back (%reason%&f). <click:run_command:''/mail''><green>[Open mailbox]</green></click>'
+  campaign: '&6&lMail &8» &f%sender% &7sent everyone mail. <click:run_command:''/mail''><hover:show_text:''<gray>Claim it''><green>[Open mailbox]</green></hover></click>'
+  daily: '&6☀ &fDaily reward &eday %day% &fis in your mailbox. Streak: &e%streak% &fday(s). <click:run_command:''/mail rewards''><green>[Claim]</green></click>'
+
+reason:
+  declined: '&cdeclined'
+  expired: '&7expired'
+  recalled: '&7taken back'
+  removed: '&cremoved by staff'
+
+# Text stored in new mail. Written once, when the mail is created.
+mail:
+  receipt: '&e%player% &fpaid &6%price% &ffor your parcel.'
+  receipt-tax: '&7(%tax% tax was kept)'
+  returned-declined: '&fYour parcel to &e%player% &fwas declined.'
+  returned-expired: '&fYour parcel to &e%player% &fwas not collected in time.'
+  returned-recalled: '&fYou took back your parcel to &e%player%&f.'
+  returned-removed: '&fYour parcel to &e%player% &fwas removed by staff.'
+  returned-compose: '&fItems from a parcel you were writing.'
+  voucher: '&6Voucher Delivery\n\n&fYou received a voucher: &e%voucher%'
+  daily: '&fDaily reward, day &e%day%&f. Streak: &e%streak% &fday(s).'
+  code: '&fReward code &e%code%&f.'
+  vote: '&fThanks for voting on &e%service%&f!'
+  give: '&fA delivery from &e%sender%&f.'
+
+codes:
+  usage: '&cUsage: /mail redeem <code>'
+  redeemed: '&aCode &f%code% &aredeemed! Your reward is in the Rewards tab.'
+  unknown: '&cThat code does not exist.'
+  disabled: '&cThat code is not active.'
+  expired: '&cThat code has expired.'
+  used-up: '&cThat code has been used up.'
+  already: '&cYou already redeemed that code.'
+  cooldown: '&cWait a moment before trying another code.'
+
+block:
+  usage: '&cUsage: /mail block <player>, /mail unblock <player>'
+  blocked: '&aYou no longer accept parcels from &f%player%&a.'
+  unblocked: '&aYou accept parcels from &f%player% &aagain.'
+  already: '&e%player% is already blocked.'
+  not-blocked: '&e%player% is not blocked.'
+  self: '&cYou cannot block yourself.'
+  list-header: '&6Blocked players (&e%count%&6):'
+  list-line: ' &8• &f%player%'
+  list-empty: '&7You have not blocked anyone.'
+  accepting: '&aYou accept parcels again.'
+  refusing: '&eYou now refuse all parcels. Staff deliveries and rewards still arrive.'
+
+admin:
+  sent: '&aMail sent to &f%count% &aplayer(s).'
+  give-usage: '&cUsage: /mail give <player|online|all> <hand|item <material> [amount]|voucher <id>|money <amount>> [message]'
+  give-all: '&aDelivered to every known player as campaign &f%name% &a(stored once, claimed once per player).'
+  hand-empty: '&cHold the item you want to send.'
+  unknown-material: '&cUnknown item: %material%'
+  unknown-voucher: '&cUnknown voucher: %voucher%'
+  invalid-amount: '&cInvalid amount: %value%'
+  usage-send: '&cUsage: /mail send <player|all|allonline|name;name> <message>'
+  usage-voucher: '&cUsage: /mail voucher send <voucher> <player|all|allonline|name;name>'
+  announce-usage: '&cUsage: /mail announce [hand] [money:<n>] [voucher:<id>] [start:<when>] [end:<when>] [name:<id>] [permission:<node>] <message>'
+  campaign-created: '&aCampaign &f%name% &acreated. %window%'
+  campaign-window: '&7Runs %start% &7to %end%&7.'
+  campaign-now: '&7now'
+  campaign-forever: '&7no end'
+  campaign-exists: '&cA campaign named %name% already exists.'
+  campaign-unknown: '&cNo campaign named %name%.'
+  campaign-ended: '&aCampaign &f%name% &aended. Players who did not claim it no longer see it.'
+  campaign-deleted: '&aCampaign &f%name% &adeleted.'
+  campaign-command-added: '&aCommand added to campaign &f%name%&a.'
+  campaign-list-header: '&6Campaigns (&e%count%&6):'
+  campaign-list-line: ' &8• &f%name% &7- %state% &7- &f%claims% &7claim(s) &8(%window%)'
+  campaign-state-live: '&alive'
+  campaign-state-scheduled: '&escheduled'
+  campaign-state-over: '&7over'
+  code-usage: '&cUsage: /mail code create <code> [uses:<n>] [per-player:<n>] [expires:<when>] [money:<n>] [voucher:<id>] [hand] [message...]'
+  code-created: '&aCode &f%code% &acreated: &f%uses% &ause(s), &f%per% &aper player%expires%.'
+  code-expires: ', expires %when%'
+  code-exists: '&cThe code %code% already exists.'
+  code-invalid: '&cCodes use letters, digits, - and _ (3 to 32 characters).'
+  code-unknown: '&cNo code %code%.'
+  code-deleted: '&aCode &f%code% &adeleted.'
+  code-command-added: '&aCommand added to code &f%code%&a.'
+  code-list-header: '&6Reward codes (&e%count%&6):'
+  code-list-line: ' &8• &f%code% &7- &f%uses%&7/&f%max% &7used, &f%per% &7per player%expires%'
+  unlimited: unlimited
+  info-header: '&6&lDonutMail &e%version%'
+  info-platform: ' &7Server: &f%platform% &8(%folia%)'
+  info-storage: ' &7Storage: &f%storage% &8| &7Server id: &f%server%'
+  info-hooks: ' &7Economy: &f%economy% &8| &7PlaceholderAPI: &f%papi% &8| &7NuVotifier: &f%votifier%'
+  info-counts: ' &7Mail: &f%mail% &7(active &f%active%&7, cash on delivery &f%cod%&7, locked &f%claiming%&7)'
+  info-other: ' &7Campaigns: &f%campaigns% &8| &7Codes: &f%codes% &8| &7Players: &f%players%'
+  info-network: ' &7Network polling: &f%network%'
+  purge-usage: '&cUsage: /mail admin purge <days>'
+  purged: '&aDeleted &f%count% &afinished mail older than %days% day(s).'
+  view-usage: '&cUsage: /mail admin view <player>'
+  removed: '&aRemoved that mail. %what%'
+  removed-returned: '&7The items went back to the sender.'
+  remove-failed: '&cThat mail changed in the meantime; nothing was removed.'
+  block-added: '&aThis block now opens the mailbox.'
+  block-removed: '&aThis block no longer opens the mailbox.'
+  block-none: '&cLook at a block within 5 blocks first.'
+  block-not-mailbox: '&cThat block is not a mailbox.'
+  help:
+    - '&6&lMail &8- &7staff commands'
+    - ' &e/mail give <player|online|all> <hand|item <material> [n]|voucher <id>|money <n>> [message] &8- &7deliver to mailboxes'
+    - ' &e/mail send <targets> <message> &8- &7text mail'
+    - ' &e/mail announce [options] <message> &8- &7one mail for everyone, claimed once each'
+    - ' &e/mail campaign list|end|delete|addcommand &8- &7manage campaigns'
+    - ' &e/mail code create|delete|list|addcommand &8- &7reward codes'
+    - ' &e/mail voucher send <id> <targets> &8- &7send a voucher'
+    - ' &e/mail admin view <player> &8- &7inspect and remove a player''s mail'
+    - ' &e/mail admin info &8- &7storage, hooks and counts'
+    - ' &e/mail admin purge <days> &8- &7delete old finished mail'
+    - ' &e/mail admin setblock|removeblock &8- &7mailbox blocks'
+    - ' &e/mail reload &8- &7reload the configuration'
+
+help:
+  - '&6&lMail &8- &7commands'
+  - ' &e/mail &8- &7open your mailbox'
+  - ' &e/mail send <player> &8- &7send a parcel (add &fcod <price> &7for cash on delivery)'
+  - ' &e/mail claimall &8- &7claim everything that fits'
+  - ' &e/mail redeem <code> &8- &7redeem a reward code'
+  - ' &e/mail block <player> &8/ &eunblock <player> &8/ &eblocklist &8- &7who can send you parcels'
+  - ' &e/mail toggle &8- &7accept or refuse all parcels'

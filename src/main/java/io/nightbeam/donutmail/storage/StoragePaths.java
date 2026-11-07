@@ -9,7 +9,11 @@ public final class StoragePaths {
     }
 
     public static File dataDirectory(JavaPlugin plugin) {
-        return new File(plugin.getDataFolder(), "data");
+        return dataDirectory(plugin.getDataFolder());
+    }
+
+    public static File dataDirectory(File pluginFolder) {
+        return new File(pluginFolder, "data");
     }
 
     public static File yamlMailFile(JavaPlugin plugin) {
