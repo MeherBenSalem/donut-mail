@@ -20,13 +20,13 @@ Codes for events, streams, newsletters and apologies. Players type `/mail redeem
 Codes use letters, digits, `-` and `_` (3 to 32 characters) and are not case-sensitive.
 
 ```
-/mail code create LAUNCH uses:500 per-player:1 expires:7d money:1000 Thanks for joining the launch!
-/mail code addcommand LAUNCH lp user %player% parent add supporter
+/mail code create SPRING uses:2 per-player:1 money:50 Spring reward
+/mail code addcommand SPRING lp user %player% parent add supporter
 ```
 
 ## Limits that hold
 
-Each redemption counts the use (total and per player) and saves the reward in one transaction. When 500 uses are left and 600 players redeem at the same moment, exactly 500 get it; a player who sends the command twice gets it once. `codes.attempt-cooldown-seconds` (3 by default) slows down guessing.
+Each redemption counts the use (total and per player) and saves the reward in one transaction. In the tests, 10 players redeeming a code with 3 uses at the same moment got exactly 3 rewards, and one player redeeming a one-per-player code from 6 threads at once got exactly 1 (on YAML, SQLite and MariaDB). `codes.attempt-cooldown-seconds` (3 by default) slows down guessing.
 
 ## Managing
 

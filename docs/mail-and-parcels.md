@@ -41,8 +41,8 @@ Optional (off by default): a flat fee and/or a fee per stack, paid through Vault
 parcels:
   postage:
     enabled: true
-    flat: 50
-    per-stack: 10
+    flat: 5
+    per-stack: 1
 ```
 
 ## Who can send you parcels

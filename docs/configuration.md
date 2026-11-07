@@ -76,7 +76,7 @@ The rest (`campaigns`, `codes`, `votes`, `discord`, `mailbox-blocks`, `audit`, `
 
 ### Storage
 
-- **YAML** keeps everything in `data/*.yml` and writes each change before acting on it. Fine for small servers; above a few thousand mails, SQLite is faster.
+- **YAML** keeps everything in `data/*.yml` and rewrites the file on each change before acting on it. Fine for small servers; SQLite suits busy ones better.
 - **SQLITE** (default for new installs) uses `data/donutmail.db` and the SQLite driver that ships with Paper.
 - **MYSQL** works with MySQL 8 and MariaDB, for one server or [several](multi-server.md).
 
@@ -88,8 +88,8 @@ With [NuVotifier](https://github.com/NuVotifier/NuVotifier) installed:
 votes:
   enabled: true
   message: '<green>Thanks for voting on <white>%service%</white>!'
-  money: 250
-  items: ['DIAMOND:2']
+  money: 10
+  items: ['DIAMOND:1']
   commands: ['crate key give %player% vote 1']
   voucher: ''
 ```

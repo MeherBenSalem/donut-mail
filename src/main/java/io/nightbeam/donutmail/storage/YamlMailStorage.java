@@ -30,8 +30,8 @@ import java.util.logging.Logger;
 /**
  * YAML files in {@code plugins/DonutMail/data/}: {@code mails.yml} (same layout as 1.x, so 1.x data is read
  * as is), {@code campaigns.yml}, {@code players.yml} and {@code codes.yml}. Every change is written to a
- * temporary file and moved into place before the caller continues. One server only; fine for small
- * servers, use SQLite above a few thousand mails.
+ * temporary file and moved into place before the caller continues. For one server; fine for small
+ * servers, SQLite suits busy ones better.
  */
 public final class YamlMailStorage extends MemoryMailStorage {
     private final File folder;

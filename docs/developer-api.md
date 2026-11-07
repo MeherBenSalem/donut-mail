@@ -24,7 +24,7 @@ DonutMailAPI.deliver(Delivery.to(playerId)
         .money(250)                                // paid through Vault when claimed
         .command("lp user %player% permission set kit.vip")
         .voucher("vote_reward")                    // plugins/DonutMail/vouchers/
-        .expiresIn(Duration.ofDays(14))            // default: mail.expire-days; Duration.ZERO = never
+        .expiresIn(Duration.ofDays(7))             // default: mail.expire-days; Duration.ZERO = never
         .rewardsTab()                              // list it on the Rewards tab instead of the Inbox
         .build())
     .thenAccept(mailId -> getLogger().info("Delivered " + mailId));
@@ -35,7 +35,7 @@ The future completes once the mail is stored (off the main thread) and completes
 ## Parcels on a player's behalf
 
 ```java
-DonutMailAPI.sendParcel(sellerId, "Steve", buyerId, List.of(item), "Your order", 1500.0)
+DonutMailAPI.sendParcel(sellerId, "Alice", buyerId, List.of(item), "Your order", 250.0)
     .thenAccept(result -> {
         if (result.sent()) { /* result.mailId() */ }
         else { /* BLOCKED, REFUSING, CANCELLED, NO_ECONOMY, INVALID or FAILED */ }
@@ -51,7 +51,7 @@ DonutMailAPI.createCampaign(CampaignRequest.named("summer")
         .sender("Server")
         .message("<gold>Summer event!</gold> Thanks for playing.")
         .item(new ItemStack(Material.ELYTRA))
-        .money(1000)
+        .money(100)
         .ends(Instant.now().plus(Duration.ofDays(7)))
         .permission("group.member")
         .build());
@@ -104,9 +104,9 @@ public void onPaid(ParcelPaidEvent event) {
 
 @EventHandler
 public void onSend(MailSendEvent event) {
-    if (event.getCodPrice() > 1_000_000 && !isTrusted(event.getSenderId())) {
+    if (event.getMessage() != null && event.getMessage().contains("http")) {
         event.setCancelled(true);
-        event.setCancelMessage("<red>Trades above 1M need a staff witness.");
+        event.setCancelMessage("<red>Links are not allowed in parcel notes.");
     }
 }
 ```

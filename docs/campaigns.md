@@ -1,6 +1,6 @@
 # Campaigns
 
-A campaign is one mail for every player: a server announcement, an event reward, a "thanks for 1,000 members" gift. It is stored once, every player can claim it once, and players who join later see it too, inside an optional time window.
+A campaign is one mail for every player: a server announcement, an event reward, a thank-you gift. It is stored once, every player can claim it once, and players who join later see it too, inside an optional time window.
 
 ## Creating one
 
@@ -22,13 +22,13 @@ A campaign is one mail for every player: a server announcement, an event reward,
 Options go before the message; everything after them is the message (MiniMessage and `&` codes work). Times use the time zone in daily.yml (`timezone`).
 
 ```
-/mail announce name:winter hand money:2500 end:2026-12-31 <aqua>Happy holidays!</aqua> Thanks for playing this year.
+/mail announce name:launch money:100 end:7d <gold>Launch week</gold> thanks for playing
 ```
 
 Add console commands to run when a player claims it:
 
 ```
-/mail campaign addcommand winter lp user %player% permission set cosmetics.snowman
+/mail campaign addcommand launch lp user %player% permission set cosmetics.launch
 ```
 
 `%player%` and `%uuid%` are replaced.
