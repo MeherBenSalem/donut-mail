@@ -12,7 +12,7 @@ Send items to any player, online or offline. Trade safely with cash on delivery.
 - **Parcels**: drop items into a menu, pick any player (names tab-complete), add a note, send. Recipients are told at once, or with a summary when they join. Unclaimed parcels come back. Senders can take a parcel back until it is claimed.
 - **Cash on delivery**: set a price; the recipient previews the exact items and pays to accept, or declines and the items go back. The money reaches the sender as a payment in their mailbox.
 - **Campaigns**: `/mail announce` creates one mail for everyone, including players who join later, inside an optional time window. Stored once, claimed once per player. Items, money, commands and vouchers. Optional Discord post.
-- **Daily rewards**: a streak calendar (7 days by default) delivered to the Rewards tab on the first join of the day.
+- **Daily rewards**: a streak calendar (7 days by default) delivered to the Rewards tab when a player joins on a new day.
 - **Reward codes**: `/mail redeem <code>` with total uses, uses per player and expiry.
 - **Deliveries**: `/mail give <player|online|all> <hand|item|voucher|money>` from staff and the console, plus vote rewards through NuVotifier.
 - **Control**: block players, refuse all parcels, cooldown, daily limit, per-recipient and mailbox limits, item blacklist, optional postage.

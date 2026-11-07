@@ -8,7 +8,7 @@ Cash on delivery is a safe way to trade with someone who is not online at the sa
 
 ## Receiving
 
-The parcel waits on the **Parcels** tab (first in the list). Clicking it opens a preview with:
+The parcel waits at the top of the **Parcels** tab. Clicking it opens a preview with:
 
 - the items, exactly as they are;
 - **Pay and Collect**: shows your balance before and after;
@@ -19,7 +19,7 @@ After paying, the items are yours: everything that fits is handed over at once, 
 ## What can't go wrong
 
 - **Paying twice**: the parcel is locked for one payment before any money moves. A double click, a second player or a second server acting at the same moment finds it locked and nothing happens.
-- **Paying for something that is gone**: if the sender takes the parcel back at the same moment you pay, only one of you wins; the other is told and nothing is charged or returned twice.
+- **Paying for something that is gone**: if the sender takes the parcel back at the same moment you pay, one of you wins; the other is told and nothing is charged or returned twice.
 - **Losing the items**: a parcel that is declined, expires, or is removed by staff goes back to the sender, unless they were paid for.
 - **Losing the money**: the sender's payment is stored as mail until they collect it, so it is never paid to a player who is offline or on another server's economy by mistake.
 

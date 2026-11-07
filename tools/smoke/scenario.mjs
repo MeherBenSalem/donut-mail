@@ -65,6 +65,39 @@ function countIn(window, name, from = 9, to = 44) {
   return n;
 }
 
+/** Readable text of a chat component (JSON string or object) for window dumps. */
+function plainText(value) {
+  if (value == null) return '';
+  let node = value;
+  if (typeof value === 'string') {
+    try { node = JSON.parse(value); } catch { return value; }
+  }
+  if (typeof node === 'string') return node;
+  if (Array.isArray(node)) return node.map(plainText).join('');
+  if (node.type === 'compound' && node.value) {
+    const simplify = (v) => (v && v.type ? (v.type === 'list' ? v.value.value.map(simplify) : v.type === 'compound'
+      ? Object.fromEntries(Object.entries(v.value).map(([k, x]) => [k, simplify(x)])) : v.value) : v);
+    return plainText(simplify(node));
+  }
+  let out = node.text ?? node[''] ?? (node.translate ? `[${node.translate}]` : '');
+  if (Array.isArray(node.extra)) out += node.extra.map(plainText).join('');
+  return out;
+}
+
+/** Writes what a menu shows (names and lore) to windows.txt, to review menus without a client. */
+export function dumpWindow(window, label, file) {
+  if (!file) return;
+  const lines = [`== ${label} (${plainText(window.title)})`];
+  for (let i = 0; i < window.inventoryStart; i++) {
+    const item = window.slots[i];
+    if (!item || item.name === 'gray_stained_glass_pane') continue;
+    const name = item.customName ? plainText(item.customName) : item.displayName;
+    const lore = (item.customLore || []).map(plainText);
+    lines.push(`[${i}] ${item.name} x${item.count} | ${name}${lore.length ? '\n      ' + lore.join('\n      ') : ''}`);
+  }
+  fs.appendFileSync(file, lines.join('\n') + '\n\n');
+}
+
 function close(bot) {
   if (bot.currentWindow) bot.closeWindow(bot.currentWindow);
 }
@@ -150,6 +183,7 @@ export async function coreScenario({ target, step, port, java, result }) {
   const extraJars = [];
   if (extras.includes('votes')) extraJars.push(await (await import('./run.mjs')).fetchVotifier());
   const prepared = await prepareServer(target, target.name, port, { storage: target.storage, database: 'donutmail_live', extras, jars: extraJars });
+  const windows = path.join(prepared.dir, 'windows.txt');
   result.server = `${target.project} ${target.version} build ${prepared.build} (sha256 ${prepared.sha256})`;
   const server = new Server(prepared.dir, java, prepared.jar, port);
   const hook = extras.includes('discord') ? webhookCatcher() : null;
@@ -184,6 +218,7 @@ export async function coreScenario({ target, step, port, java, result }) {
     await check(step, 'daily reward delivered on first join (day 1)', async () => (await waitChat(bob, /Daily reward day 1/, 20_000)).slice(0, 70));
     await check(step, 'daily reward claimed from the Rewards tab', async () => {
       const rewards = await openTab(bob, '/mail rewards');
+      dumpWindow(rewards, 'Rewards tab (day 1 waiting)', windows);
       const calendar = countIn(rewards, 'iron_ingot', 10, 16) + countIn(rewards, 'gold_ingot', 10, 16) + countIn(rewards, 'diamond', 10, 16);
       const slot = slotOf(rewards, 'sunflower', 18, 44);
       if (slot < 0) throw new Error('no daily reward in the Rewards tab');
@@ -251,9 +286,11 @@ export async function coreScenario({ target, step, port, java, result }) {
     });
     await check(step, 'recipient previews and pays (money to sender, receipt)', async () => {
       const parcels = await openTab(bob, '/mail parcels');
+      dumpWindow(parcels, 'Parcels tab with a cash-on-delivery parcel', windows);
       const slot = slotOf(parcels, 'ender_chest');
       if (slot < 0) throw new Error('cash-on-delivery parcel not listed');
       const preview = await waitWindow(bob, () => bob.clickWindow(slot, 0, 0));
+      dumpWindow(preview, 'Cash-on-delivery preview', windows);
       if (preview.slots[0]?.name !== 'emerald') throw new Error(`preview shows ${preview.slots[0]?.name}`);
       if (preview.slots[47]?.name !== 'emerald_block') throw new Error(`pay button is ${preview.slots[47]?.name}`);
       mark(bob);
@@ -319,7 +356,9 @@ export async function coreScenario({ target, step, port, java, result }) {
       const codSlot = slotOf(parcels, 'ender_chest');
       const bobPreview = await waitWindow(bob, () => bob.clickWindow(codSlot, 0, 0));
       const sent = await openTab(alice, '/mail sent');
+      dumpWindow(sent, 'Sent tab', windows);
       const alicePreview = await waitWindow(alice, () => alice.clickWindow(9, 0, 0));
+      dumpWindow(alicePreview, 'Sent parcel preview (take back)', windows);
       if (bobPreview.slots[47]?.name !== 'emerald_block' || alicePreview.slots[51]?.name !== 'hopper_minecart') {
         throw new Error(`buttons ${bobPreview.slots[47]?.name}/${alicePreview.slots[51]?.name}`);
       }
@@ -343,6 +382,61 @@ export async function coreScenario({ target, step, port, java, result }) {
         if (!/RETURN/.test(aliceMail)) throw new Error(`no returned parcel: ${aliceMail}`);
       }
       return `${paid ? 'payment' : 'take-back'} won; the other was refused`;
+    });
+
+    // The parcel menu's own buttons: recipient, note and price typed in chat (chat prompts).
+    await check(step, 'compose menu buttons: recipient, note and price through chat', async () => {
+      await sleep(3200);
+      await server.lab('money Bob 1000');
+      await server.lab('give Alice COAL 7');
+      await sleep(400);
+      const box = await openTab(alice, '/mail');
+      const compose = await waitWindow(alice, () => alice.clickWindow(49, 0, 0));
+      if (compose.slots[47]?.name !== 'player_head') throw new Error(`recipient button is ${compose.slots[47]?.name}`);
+      mark(alice);
+      let window = await waitWindow(alice, async () => {
+        await alice.clickWindow(47, 0, 0);
+        await waitChat(alice, /name of the player/);
+        await say(alice, 'Bob');
+      });
+      window = await waitWindow(alice, async () => {
+        await alice.clickWindow(48, 0, 0);
+        await waitChat(alice, /short note/);
+        await say(alice, 'Payment for the coal, thanks!');
+      });
+      window = await waitWindow(alice, async () => {
+        await alice.clickWindow(50, 0, 0);
+        await waitChat(alice, /cash-on-delivery price/);
+        await say(alice, '75');
+      });
+      await putIn(alice, window, 'coal');
+      await sleep(400);
+      dumpWindow(alice.currentWindow, 'Compose menu (recipient, note, price set)', windows);
+      mark(alice);
+      mark(bob);
+      await alice.clickWindow(49, 0, 0);
+      const answer = await waitChat(alice, /Parcel sent to Bob for \$75/);
+      await waitChat(bob, /for \$75/);
+      const parcels = await openTab(bob, '/mail parcels');
+      const slot = slotOf(parcels, 'ender_chest');
+      const preview = await waitWindow(bob, () => bob.clickWindow(slot, 0, 0));
+      mark(bob);
+      await bob.clickWindow(47, 0, 0);
+      await waitChat(bob, /You paid/);
+      await sleep(800);
+      return `${answer.replace(/.*» /, '')}; ${expectEq(await count(server, 'Bob', 'COAL'), 7, 'coal')}, ${expectEq(await balance(server, 'Bob'), 925, 'Bob balance')}`;
+    });
+
+    await check(step, 'Claim All button', async () => {
+      await server.lab('deliver Bob BREAD 1 4');
+      await server.lab('deliver Bob BREAD 1 6');
+      await sleep(800);
+      const inbox = await openTab(bob, '/mail');
+      mark(bob);
+      await bob.clickWindow(47, 0, 0);
+      const line = await waitChat(bob, /Claimed \d+ mail/);
+      await sleep(600);
+      return `${line.replace(/.*» /, '')} ${expectEq(await count(server, 'Bob', 'BREAD'), 10, 'bread')}`;
     });
 
     // Full inventory: partial claim.
@@ -376,6 +470,7 @@ export async function coreScenario({ target, step, port, java, result }) {
       await waitChat(bob, /sent everyone mail/);
       const before = await balance(server, 'Bob');
       const inbox = await openTab(bob, '/mail');
+      dumpWindow(inbox, 'Inbox with a campaign', windows);
       if (inbox.slots[9]?.name !== 'nether_star') throw new Error(`slot 9 is ${inbox.slots[9]?.name}`);
       mark(bob);
       await bob.clickWindow(9, 0, 0);
@@ -417,6 +512,19 @@ export async function coreScenario({ target, step, port, java, result }) {
       await waitChat(alice, /Claimed/);
       await sleep(800);
       return `OK, already, OK, used up; ${expectEq(await balance(server, 'Alice') - before, 50, 'code money')}`;
+    });
+
+    await check(step, 'redeem through the Rewards tab button', async () => {
+      await server.run('mail code create GUICODE money:5', /Code .*GUICODE.* created/);
+      const rewards = await openTab(bob, '/mail rewards');
+      if (rewards.slots[51]?.name !== 'name_tag') throw new Error(`redeem button is ${rewards.slots[51]?.name}`);
+      mark(bob);
+      await waitWindow(bob, async () => {
+        await bob.clickWindow(51, 0, 0);
+        await waitChat(bob, /Type the code/);
+        await say(bob, 'guicode');
+      });
+      return (await waitChat(bob, /redeemed/)).replace(/.*» /, '');
     });
 
     // Deliveries from the console.
@@ -520,8 +628,17 @@ export async function coreScenario({ target, step, port, java, result }) {
       await sleep(1000);
       const block = bob.blockAt(new (bob.entity.position.constructor)(x, y, z));
       if (!block || block.name !== 'lectern') throw new Error(`block at ${placed} is ${block?.name}`);
-      const window = await waitWindow(bob, () => bob.activateBlock(block));
-      return window.slots[2]?.name === 'chest' ? `opened at ${placed}` : false;
+      try {
+        const window = await waitWindow(bob, () => bob.activateBlock(block), 8_000);
+        return window.slots[2]?.name === 'chest' ? `opened by the bot's right-click at ${placed}` : false;
+      } catch (error) {
+        if (!target.via) throw error;
+        // Through ViaBackwards the bot's block click never reaches the server (no interact event at all);
+        // fire the same Bukkit event from the fixture to check DonutMail's side.
+        const window = await waitWindow(bob, () => server.lab(`click Bob ${x} ${y} ${z}`));
+        return window.slots[2]?.name === 'chest'
+          ? `opened by a right-click event fired by the fixture at ${placed} (the bot's click does not pass ViaBackwards)` : false;
+      }
     });
 
     await check(step, 'staff view and removal', async () => {
@@ -552,8 +669,21 @@ export async function coreScenario({ target, step, port, java, result }) {
     const beforeBob = await mails(server, 'Bob');
     const beforeCarol = await mails(server, 'Carol');
     await server.run('mail admin streak Bob 2', /streak of Bob set to 2/);
-    for (const name of Object.keys(bots)) await leave(name);
+    // Alice is writing a parcel when the server stops: the items must survive.
+    let composing = false;
+    try {
+      await server.lab('give Alice CLAY_BALL 2');
+      await sleep(400);
+      close(alice);
+      const compose = await waitWindow(alice, () => say(alice, '/mail send Bob'));
+      await putIn(alice, compose, 'clay_ball');
+      composing = true;
+    } catch (error) {
+      step('parcel menu open during the stop', false, error.message);
+    }
+    for (const name of Object.keys(bots)) if (name !== 'Alice') await leave(name);
     await server.stop();
+    await leave('Alice');
     await check(step, 'restart', async () => {
       server.lines.length = 0;
       server.cursor = 0;
@@ -570,6 +700,25 @@ export async function coreScenario({ target, step, port, java, result }) {
       }
       return `Bob: ${afterBob}`;
     });
+    if (composing) {
+      await check(step, 'items in an open parcel menu survive a server stop', async () => {
+        const alice2 = await join('Alice');
+        await sleep(1500);
+        let total = await count(server, 'Alice', 'CLAY_BALL');
+        if (total < 2) {
+          const inbox = await openTab(alice2, '/mail');
+          const back = slotOf(inbox, 'barrel');
+          if (back < 0) throw new Error(`not in the inventory (${total}) nor the mailbox: ${await mails(server, 'Alice')}`);
+          mark(alice2);
+          await alice2.clickWindow(back, 0, 0);
+          await waitChat(alice2, /Claimed/);
+          await sleep(600);
+          total = await count(server, 'Alice', 'CLAY_BALL');
+          return expectEq(total, 2, 'clay balls (from the mailbox)');
+        }
+        return expectEq(total, 2, 'clay balls (back in the inventory)');
+      });
+    }
     await check(step, 'daily streak continues (day 3)', async () => {
       await waitChat(bob2, /Daily reward day 3/, 20_000);
       await server.lab('clear Bob');

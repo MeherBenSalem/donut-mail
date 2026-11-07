@@ -23,7 +23,7 @@ storage:
 network:
   # A name for this server in the audit log and claim locks. Empty = generated once and kept in data/server-id.txt.
   server-id: ''
-  # How often to look for mail sent from other servers (MySQL only).
+  # How often to look for mail sent from other servers (MySQL storage).
   poll-interval-seconds: 3
 
 mail:

@@ -95,6 +95,14 @@ public final class MailLabPlugin extends JavaPlugin implements Listener {
         count("code");
     }
 
+    /** Logs block clicks, so a mailbox-block failure shows whether the click reached the server. */
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onInteract(org.bukkit.event.player.PlayerInteractEvent event) {
+        if (event.getClickedBlock() != null && event.getAction() == org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK) {
+            report("interact " + event.getPlayer().getName() + " " + event.getClickedBlock().getType() + " hand=" + event.getHand());
+        }
+    }
+
     private static Economy economy() {
         RegisteredServiceProvider<Economy> provider = Bukkit.getServicesManager().getRegistration(Economy.class);
         return provider == null ? null : provider.getProvider();
@@ -227,6 +235,19 @@ public final class MailLabPlugin extends JavaPlugin implements Listener {
                         donutMail().saveMailboxBlocks(locations);
                         report("place " + key);
                     });
+                }
+                case "click" -> {
+                    // lab click <player> <x> <y> <z>: fires a real right-click event on a block (for bots whose click
+                    // packets do not pass ViaBackwards).
+                    Player player = online(args[1]);
+                    Location at = new Location(player.getWorld(), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]));
+                    player.getScheduler().run(this, task -> {
+                        org.bukkit.event.player.PlayerInteractEvent event = new org.bukkit.event.player.PlayerInteractEvent(player,
+                                org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK, player.getInventory().getItemInMainHand(), at.getBlock(),
+                                org.bukkit.block.BlockFace.UP, org.bukkit.inventory.EquipmentSlot.HAND);
+                        Bukkit.getPluginManager().callEvent(event);
+                        report("click " + args[1] + " cancelled=" + event.isCancelled());
+                    }, null);
                 }
                 case "save" -> {
                     Player player = online(args[1]);

@@ -2,7 +2,7 @@
 
 ## Look into a mailbox
 
-`/mail admin view <player>` lists a player's mail: everything waiting first, then their recent history with what happened to each (claimed, returned, expired, removed). Right-click to see a mail's contents. **Shift-right-click** a waiting mail to remove it: a player's parcel goes back to its sender, anything else is deleted. Removals are written to the audit log with your name.
+`/mail admin view <player>` lists a player's mail: everything waiting at the top, then their recent history with what happened to each (claimed, returned, expired, removed). Right-click to see a mail's contents. **Shift-right-click** a waiting mail to remove it: a player's parcel goes back to its sender, anything else is deleted. Removals are written to the audit log with your name.
 
 ## Health
 

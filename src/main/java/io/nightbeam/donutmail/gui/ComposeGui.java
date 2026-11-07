@@ -173,6 +173,16 @@ public final class ComposeGui extends BaseGui {
         giveBack(takeItems(), false);
     }
 
+    /**
+     * Server shutdown: the items go to the player's own mailbox, so nothing depends on the menu closing
+     * normally (on Folia, plugins stop before players are removed).
+     */
+    public void rescue() {
+        if (released || prompting) return;
+        released = true;
+        giveBack(takeItems(), true);
+    }
+
     /** The menu closed while limits were being checked: the items go back now. */
     private void releaseAfterCheck(boolean mailboxOnly) {
         sending = false;

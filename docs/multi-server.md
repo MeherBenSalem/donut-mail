@@ -22,11 +22,11 @@ network:
   poll-interval-seconds: 3
 ```
 
-Storage settings need a full restart, not `/mail reload`. Mail is not copied between storage types: to move a single server from YAML or SQLite, start with an empty MySQL database on a quiet day, or let old mail be claimed first.
+Storage settings need a full restart, not `/mail reload`. Mail is not copied between storage types: to move a single server from YAML or SQLite, start with an empty MySQL database on a quiet day, or let old mail be claimed before switching.
 
 ## How it stays consistent
 
-Every change of a mail is one conditional update in MySQL: claim, payment, decline, return, expiry, recall and staff removal each check the mail's current state and change it in one step, and only one server can win. A second server that tries the same thing at the same moment waits for the first to commit, sees the mail has changed, and does nothing. MySQL runs at READ COMMITTED for DonutMail's connections, and the transactions that also create a mail (receipts, returned parcels, campaign claims, daily rewards, code rewards) commit both or neither.
+Every change of a mail is one conditional update in MySQL: claim, payment, decline, return, expiry, recall and staff removal each check the mail's current state and change it in one step, and exactly one server can win. A second server that tries the same thing at the same moment waits for the other to commit, sees the mail has changed, and does nothing. MySQL runs at READ COMMITTED for DonutMail's connections, and the transactions that also create a mail (receipts, returned parcels, campaign claims, daily rewards, code rewards) commit both or neither.
 
 Claims are tied to the server that started them. If a server stops in the middle of a claim, it finishes or undoes that claim the next time the player joins it (see [How items stay safe](safety.md)).
 

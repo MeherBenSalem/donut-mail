@@ -6,7 +6,7 @@ Yes, all of it: parcels, cash on delivery, campaigns, daily rewards, codes, the 
 
 ## I'm updating from 1.x. Will I lose anything?
 
-No. Replace the jar and restart. Mail stored by 1.x (YAML, SQLite or MySQL), vouchers, permissions and settings are kept; the 1.x texts in config.yml move to messages.yml. Back up `plugins/DonutMail` first, as with any update. Data from PostMaster is still migrated too.
+No. Replace the jar and restart. Mail stored by 1.x (YAML, SQLite or MySQL), vouchers, permissions and settings are kept; the 1.x texts in config.yml move to messages.yml. Back up `plugins/DonutMail` before updating, as with any update. Data from PostMaster is still migrated too.
 
 ## Does it work on Spigot?
 
@@ -22,11 +22,11 @@ DonutMail's. If another plugin takes `/mail` on your server, `/mailbox` always o
 
 ## Can players dupe items with it?
 
-Every claim, payment, decline, return and expiry is one conditional update that only one action can win, also across servers, and a claim interrupted by a crash is finished or undone from a receipt in the player's own save data. See [How items stay safe](safety.md).
+Every claim, payment, decline, return and expiry is one conditional update that exactly one action can win, also across servers, and a claim interrupted by a crash is finished or undone from a receipt in the player's own save data. See [How items stay safe](safety.md).
 
 ## Can players scam each other with cash on delivery?
 
-The buyer sees the exact items before paying, and pays only for what is in the preview. The seller can't change a parcel after sending it; they can only take it back while it is unpaid, and a payment and a take-back at the same moment can't both succeed.
+The buyer sees the exact items before paying, and pays for exactly what is in the preview. The seller can't change a parcel after sending it; all they can do is take it back while it is unpaid, and a payment and a take-back at the same moment can't both succeed.
 
 ## What happens to parcels nobody claims?
 

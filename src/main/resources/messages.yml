@@ -19,7 +19,7 @@ prefix: '&6&lMail &8» '
 
 general:
   no-permission: '&cYou do not have permission to do that.'
-  player-only: '&cOnly players can use this command.'
+  player-only: '&cThis command is for players.'
   unknown-player: '&c%player% has never played on this server.'
   reloaded: '&aDonutMail reloaded (config.yml, messages.yml, gui.yml, daily.yml and vouchers).'
   economy-missing: '&cMoney features need Vault and an economy plugin.'
@@ -56,7 +56,7 @@ parcels:
   sent: '&aParcel sent to &f%player%&a.'
   sent-cod: '&aParcel sent to &f%player% &afor &6%price% &a(cash on delivery).'
   empty: '&cPut at least one item in the parcel.'
-  no-recipient: '&cChoose who receives the parcel first.'
+  no-recipient: '&cChoose who receives the parcel.'
   self: '&cYou cannot send a parcel to yourself.'
   blocked: '&c%player% is not accepting parcels from you.'
   refusing: '&c%player% is not accepting parcels right now.'
@@ -205,7 +205,7 @@ admin:
   streak-set: '&aDaily streak of &f%player% &aset to &f%streak%&a. Their next reward continues from there.'
   block-added: '&aThis block now opens the mailbox.'
   block-removed: '&aThis block no longer opens the mailbox.'
-  block-none: '&cLook at a block within 5 blocks first.'
+  block-none: '&cLook at a block within 5 blocks.'
   block-not-mailbox: '&cThat block is not a mailbox.'
   help:
     - '&6&lMail &8- &7staff commands'

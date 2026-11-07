@@ -113,13 +113,21 @@ public final class GuiManager implements Listener {
     public void closeAll() {
         prompts.cancelAll();
         for (Player player : Bukkit.getOnlinePlayers()) {
+            InventoryHolder holder;
             try {
-                if (player.getOpenInventory().getTopInventory().getHolder(false) instanceof BaseGui) {
-                    player.closeInventory();
-                }
-            } catch (RuntimeException ignored) {
-                // Folia: another region's player; their menu closes when the server stops.
+                holder = player.getOpenInventory().getTopInventory().getHolder(false);
+            } catch (RuntimeException unavailable) {
+                continue;
             }
+            if (!(holder instanceof BaseGui gui)) continue;
+            if (!plugin.scheduler().isFolia()) {
+                try {
+                    player.closeInventory();
+                } catch (RuntimeException ignored) {
+                    // The rescue below still keeps the items.
+                }
+            }
+            if (gui instanceof ComposeGui compose) compose.rescue();
         }
     }
 }

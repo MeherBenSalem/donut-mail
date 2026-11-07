@@ -16,10 +16,10 @@ A campaign is one mail for every player: a server announcement, an event reward,
 | `start:<when>` | When it appears: `2d` (from now), `2026-12-24` or `2026-12-24T18:00`. Default: now |
 | `end:<when>` | When it disappears for players who did not claim it. Default: never |
 | `name:<id>` | A short name for the commands below. Default: generated |
-| `permission:<node>` | Only players with this permission see it |
+| `permission:<node>` | Players need this permission to see it |
 | `sender:<name>` | Who it is from. Default: your name, or "Server" from the console |
 
-Options come first; the rest is the message (MiniMessage and `&` codes work). Times use the time zone in daily.yml (`timezone`).
+Options go before the message; everything after them is the message (MiniMessage and `&` codes work). Times use the time zone in daily.yml (`timezone`).
 
 ```
 /mail announce name:winter hand money:2500 end:2026-12-31 <aqua>Happy holidays!</aqua> Thanks for playing this year.
@@ -50,7 +50,7 @@ Clicking it claims it: DonutMail records the claim and creates the player's own 
 
 ## Give to everyone
 
-`/mail give all ...` and `/mail send all <message>` also create a campaign, but only for players known to the server before it was sent, so it works like a delivery to every existing player without storing one mail each. Players who join later don't get it; use `/mail announce` for that.
+`/mail give all ...` and `/mail send all <message>` also create a campaign, limited to players known to the server before it was sent, so it works like a delivery to every existing player without storing one mail each. Players who join later don't get it; use `/mail announce` for that.
 
 ## Discord
 

@@ -20,7 +20,7 @@ EssentialsX does not load on Folia, so Folia targets use VaultUnlocked with the 
 ## What each single-server target does (`coreScenario`)
 
 1. DonutMail enables, registers its API and PlaceholderAPI expansion, and finds the economy.
-2. Daily reward day 1 arrives on the first join and is claimed from the Rewards tab.
+2. Daily reward day 1 arrives when the bot joins and is claimed from the Rewards tab.
 3. Alice sends Bob a parcel through the compose menu; Bob gets a live notice and claims it from the Parcels tab.
 4. A parcel to Carol while she is offline; she gets the clickable join summary and claims it.
 5. Cash on delivery: Bob previews and pays 250 (balance 1000 → 750, items delivered), Alice is told and collects the
@@ -38,7 +38,7 @@ EssentialsX does not load on Folia, so Folia targets use VaultUnlocked with the 
     removal, `/mail reload`, and the API events seen by the fixture.
 14. Restart: mail is unchanged, the campaign stays claimed while a new player can claim it, and a streak set to 2
     with `/mail admin streak` continues with the day 3 reward.
-15. Paper 1.21.11 only: a NuVotifier vote (protocol v1, RSA) becomes a reward; the Discord webhook receives the
+15. On Paper 1.21.11: a NuVotifier vote (protocol v1, RSA) becomes a reward; the Discord webhook receives the
     campaign; and two crash tests stop the server dead right after a delivery (with
     `-Ddonutmail.test.crash-after-delivery=nosave|save`), then check the claim is undone (player data rolled back)
     or finished (player data saved) on the next join, never lost or doubled.
@@ -58,7 +58,7 @@ mvn -B package
 mvn -B -f tools/smoke/fixture/pom.xml package -Ddonutmail.version=2.0.0 -Ddonutmail.jar="$PWD/target/DonutMail-2.0.0.jar"
 npm --prefix tools/smoke install
 export JAVA17_HOME=... JAVA21_HOME=... JAVA25_HOME=...      # or put JDKs in $MAILLAB_HOME/dl/jdk17 etc.
-export DONUTMAIL_110_JAR=/path/to/donut-mail-1.1.0.jar        # upgrade target only
+export DONUTMAIL_110_JAR=/path/to/donut-mail-1.1.0.jar        # for the upgrade target
 node tools/smoke/run.mjs                                      # every target
 node tools/smoke/run.mjs paper-1.21.11 folia-26.3             # selected targets
 ```
@@ -70,6 +70,6 @@ Server jars come from the PaperMC Fill API (SHA-256 checked), plugins from Modri
 official GitHub releases, cached in `$MAILLAB_HOME/dl` (default `~/.cache/donutmail-smoke`). Each server runs with
 `-Xms512M -Xmx1536M`. A JSON report per target is written to `$MAILLAB_HOME/reports/`.
 
-`fixture/` is a test-only plugin: an in-memory Vault economy (when EssentialsX is absent), API event counters and
+`fixture/` is a plugin for these tests: an in-memory Vault economy (when EssentialsX is absent), API event counters and
 console helpers (`lab money`, `balance`, `give`, `fill`, `clear`, `count`, `deliver`, `parcel`, `mails`, `place`,
 `save`, `events`). Never install it on a real server.

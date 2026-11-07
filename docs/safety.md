@@ -12,7 +12,7 @@ When an action also creates a mail (a receipt for the sender, a parcel going bac
 
 1. The mail is locked for this claim with a random token (`PENDING` → `CLAIMING`).
 2. On the player's own thread, the stacks that fit are added to their inventory, and a receipt (the token and which stacks were handed over) is written into the player's save data, in the same tick. Any save of the player has both or neither.
-3. The claim is saved: `CLAIMED`, or back to `PENDING` with only the stacks that did not fit.
+3. The claim is saved: `CLAIMED`, or back to `PENDING` with just the stacks that did not fit.
 
 If the server stops between steps 2 and 3, the next time the player joins that server the receipt decides:
 
@@ -23,14 +23,14 @@ Either way nothing is lost and nothing is doubled. Money, vouchers and commands 
 
 ## Cash on delivery
 
-Paying locks the parcel first, then takes the money, then saves the payment together with the sender's receipt. If the money can't be taken, the lock is released. If saving fails, the money is given back. If the server stops in the moment between taking the money and saving, the parcel goes back to waiting for payment on restart and the audit log records `PAY_INTERRUPTED` with the amount, so staff can check that player's balance.
+Paying locks the parcel, then takes the money, then saves the payment together with the sender's receipt. If the money can't be taken, the lock is released. If saving fails, the money is given back. If the server stops in the moment between taking the money and saving, the parcel goes back to waiting for payment on restart and the audit log records `PAY_INTERRUPTED` with the amount, so staff can check that player's balance.
 
 The receipt carries the money to the sender as mail, so it is stored safely until the sender collects it.
 
 ## Items are never deleted silently
 
 - Expired, declined, recalled and staff-removed parcels go back to the sender as a new mail. Returned parcels and receipts don't expire.
-- Items that don't fit stay in the mailbox (partial claim). They are dropped at the player's feet only if you set `claims.drop-overflow: true`.
+- Items that don't fit stay in the mailbox (partial claim). They are never dropped at the player's feet unless you set `claims.drop-overflow: true`.
 - Items left in the parcel menu go back to the player's inventory; anything that doesn't fit goes to their own mailbox.
 - Server mail with items can expire (`mail.expire-days`); every expiry is written to the audit log with the number of stacks.
 

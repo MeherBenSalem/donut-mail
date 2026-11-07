@@ -1,7 +1,7 @@
 # ─────────────────────────────────────────────────────────────────────────────
 #  DonutMail daily rewards
 #
-#  On a player's first join of the day, the reward for their streak day is delivered to the
+#  When a player joins on a new day, the reward for their streak day is delivered to the
 #  Rewards tab of their mailbox. Players need donutmail.daily (everyone by default).
 #
 #  Each day can give items, money (Vault), console commands and a voucher:
@@ -17,7 +17,7 @@ enabled: true
 # Time zone for "a new day" (IANA name such as Europe/Berlin). Empty = the server's time zone.
 timezone: ''
 
-# Missing a day starts the streak again at day 1. When false, the streak only pauses.
+# Missing a day starts the streak again at day 1. When false, the streak just pauses.
 reset-on-miss: true
 
 # After the last day: LOOP starts again at day 1, LAST keeps giving the last day's reward.

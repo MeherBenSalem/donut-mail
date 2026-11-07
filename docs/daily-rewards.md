@@ -1,6 +1,6 @@
 # Daily rewards
 
-A login streak calendar delivered through the mailbox. On a player's first join of the day, the reward for their streak day goes to the **Rewards** tab, and they get a chat message with a link to claim it. The calendar on the Rewards tab shows which days are collected, today's reward and what is coming.
+A login streak calendar delivered through the mailbox. When a player joins on a new day, the reward for their streak day goes to the **Rewards** tab, and they get a chat message with a link to claim it. The calendar on the Rewards tab shows which days are collected, today's reward and what is coming.
 
 ## The calendar
 
@@ -9,7 +9,7 @@ A login streak calendar delivered through the mailbox. On a player's first join 
 ```yaml
 enabled: true
 timezone: ''          # empty = the server's time zone, or e.g. Europe/Berlin
-reset-on-miss: true   # missing a day starts again at day 1; false only pauses the streak
+reset-on-miss: true   # missing a day starts again at day 1; false just pauses the streak
 after-last-day: LOOP  # LOOP starts again at day 1, LAST keeps giving the last day's reward
 
 days:

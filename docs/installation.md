@@ -1,6 +1,6 @@
 # Installation
 
-DonutMail is one jar for every supported version. Install it on the server only: players don't need any mods.
+DonutMail is one jar for every supported version. Install it on the server; players don't need any mods.
 
 ## Requirements
 
@@ -31,11 +31,11 @@ A new install stores mail in SQLite (`plugins/DonutMail/data/donutmail.db`); not
 
 ## Updating
 
-Replace the jar and restart. Mail, settings and messages are kept, and new settings are added automatically. Back up `plugins/DonutMail` first, as with any update.
+Replace the jar and restart. Mail, settings and messages are kept, and new settings are added automatically. Back up `plugins/DonutMail` before updating, as with any update.
 
 **From 1.x:** the same steps apply, on the same storage (YAML, SQLite or MySQL). 1.x mail is listed and claimable in 2.0; texts that 1.x kept in config.yml move to messages.yml. The `donutmail.*` and `postmaster.*` permissions keep working. See the [changelog](../CHANGELOG.md).
 
-**From PostMaster:** keep the `plugins/PostMaster` folder for the first start. DonutMail copies it into `plugins/DonutMail` and renames the old database and table.
+**From PostMaster:** keep the `plugins/PostMaster` folder when DonutMail starts for the initial time. DonutMail copies it into `plugins/DonutMail` and renames the old database and table.
 
 ## Downloads
 
