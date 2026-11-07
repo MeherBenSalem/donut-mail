@@ -31,7 +31,7 @@ The receipt carries the money to the sender as mail, so it is stored safely unti
 
 - Expired, declined, recalled and staff-removed parcels go back to the sender as a new mail. Returned parcels and receipts don't expire.
 - Items that don't fit stay in the mailbox (partial claim). They are never dropped at the player's feet unless you set `claims.drop-overflow: true`.
-- Items left in the parcel menu go back to the player's inventory; anything that doesn't fit goes to their own mailbox.
+- Items left in the parcel menu go back to the player's inventory; anything that doesn't fit goes to their own mailbox. If the server stops while the menu is open, the items go to their mailbox.
 - Server mail with items can expire (`mail.expire-days`); every expiry is written to the audit log with the number of stacks.
 
 ## Minecraft upgrades

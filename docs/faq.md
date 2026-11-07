@@ -16,9 +16,9 @@ No. DonutMail uses Paper's API (Adventure text, region schedulers). Paper is a d
 
 Paper and Folia 1.20.1 to 26.3, one jar. Java 17 or newer (Minecraft itself needs Java 21 from 1.20.5 and Java 25 for 26.x). See [Installation](installation.md).
 
-## EssentialsX also has a /mail command. Which one runs?
+## Another plugin on my server also has a /mail command. Which one runs?
 
-DonutMail's. If another plugin takes `/mail` on your server, `/mailbox` always opens DonutMail, and you can make an alias in `commands.yml`.
+If another plugin takes `/mail` on your server, `/mailbox` and `/donutmail` still open DonutMail, and an alias in `commands.yml` can point `/mail` at it.
 
 ## Can players dupe items with it?
 

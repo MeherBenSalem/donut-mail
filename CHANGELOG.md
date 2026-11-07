@@ -7,7 +7,7 @@
 - Player parcels: compose menu, any player online or offline (names tab-complete), notes, optional postage, take back unclaimed parcels from the Sent tab, return to sender on expiry.
 - Cash on delivery: the recipient previews the items and pays to accept (the money reaches the sender as a payment mail) or declines (the items go back). Optional tax.
 - Server campaigns (`/mail announce`): one stored mail for every player including later joiners, optional start/end window and permission, claimed once per player; items, money, commands and vouchers; optional Discord webhook.
-- Daily rewards: a streak calendar in `daily.yml` (7 days by default) delivered to the Rewards tab on the first join of the day; `/mail admin streak`.
+- Daily rewards: a streak calendar in `daily.yml` (7 days by default) delivered to the Rewards tab when a player joins on a new day; `/mail admin streak`.
 - Reward codes: `/mail redeem <code>`, `/mail code create|delete|list|addcommand` with total uses, uses per player and expiry.
 - `/mail give <player|online|all> <hand|item|voucher|money>` for staff and the console; vote rewards through NuVotifier; mailbox blocks (`/mail admin setblock`).
 - Block list (`/mail block|unblock|blocklist`), refuse all parcels (`/mail toggle`), cooldown, daily limit, per-recipient limit, mailbox capacity and an item blacklist.

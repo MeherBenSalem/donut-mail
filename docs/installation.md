@@ -16,7 +16,7 @@ The Java column is Minecraft's own requirement; DonutMail itself runs on Java 17
 
 Optional:
 
-- **Vault** or **VaultUnlocked** with an economy plugin (EssentialsX, CMI and others) for cash on delivery, postage and money rewards. Without one, everything else works and money features say so.
+- **Vault** or **VaultUnlocked** with an economy plugin for cash on delivery, postage and money rewards. Without one, everything else works and money features say so.
 - [PlaceholderAPI](placeholders.md) for placeholders.
 - [NuVotifier](configuration.md#vote-rewards) for vote rewards.
 - MySQL or MariaDB to [share mail between servers](multi-server.md).
