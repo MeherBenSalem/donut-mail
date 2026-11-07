@@ -28,6 +28,10 @@ on:
         description: Skip uploads if true
         required: false
         default: "false"
+      platforms:
+        description: "Where to upload: both, modrinth or curseforge"
+        required: false
+        default: "both"
 
 jobs:
   publish:
@@ -88,6 +92,7 @@ jobs:
           MODRINTH_ID: ${{ vars.MODRINTH_ID }}
           CURSEFORGE_ID: ${{ vars.CURSEFORGE_ID }}
           VERSION: ${{ steps.ver.outputs.version }}
+          PLATFORMS: ${{ inputs.platforms || 'both' }}
           JAR_LIST: ${{ steps.jars.outputs.list }}
         shell: bash
         run: |
@@ -112,8 +117,13 @@ jobs:
               `https://api.modrinth.com/v2/project/${process.env.MODRINTH_ID}/version?version_number=${encodeURIComponent(version)}`,
               { headers: { Authorization: process.env.MODRINTH_TOKEN } },
             );
+            // This endpoint lists every version of the project; it has no version_number filter.
             const existingJson = existing.ok ? await existing.json() : [];
-            if (Array.isArray(existingJson) && existingJson.length > 0) {
+            const platforms = process.env.PLATFORMS;
+            if (!['both', 'modrinth', 'curseforge'].includes(platforms)) throw new Error('platforms must be both, modrinth or curseforge');
+            if (platforms === 'curseforge') {
+              console.log('Skipping Modrinth (platforms=curseforge)');
+            } else if (Array.isArray(existingJson) && existingJson.some((v) => v.version_number === version)) {
               console.log('Modrinth version already exists; skipping upload');
             } else {
               const fileParts = jars.map((_, i) => `file_${i}`);
@@ -146,6 +156,10 @@ jobs:
               console.log('Modrinth OK', mrText.slice(0, 180));
             }
 
+            if (platforms === 'modrinth') {
+              console.log('Skipping CurseForge (platforms=modrinth)');
+              return;
+            }
             for (const jar of jars) {
               const meta = {
                 changelog,
