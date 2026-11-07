@@ -441,6 +441,15 @@ public class MemoryMailStorage implements MailStorage {
     }
 
     @Override
+    public synchronized void setDaily(UUID player, long day, int streak) {
+        PlayerRecord current = players.get(player);
+        if (current == null) current = PlayerRecord.fresh(player, null, System.currentTimeMillis());
+        players.put(player, new PlayerRecord(player, current.name(), current.firstSeen(), current.lastSeen(), current.acceptParcels(),
+                day, streak, current.dailyTotal()));
+        persist(Section.PLAYERS);
+    }
+
+    @Override
     public synchronized void setAcceptParcels(UUID player, boolean accept) {
         PlayerRecord current = players.get(player);
         if (current == null) {

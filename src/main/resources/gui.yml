@@ -190,4 +190,4 @@ compose:
     cod-off: '&7none'
     cod-line: '&7Cash on delivery: &6%price%'
     postage-line: '&7Postage: &6%fee%'
-    help: { slot: 53, material: BOOK, name: '&bHow Parcels Work', lore: ['Put items in the top 5 rows.', 'The recipient gets them in their', 'mailbox, even when offline.', '', '&7Unclaimed parcels come back', '&7after &f%days% &7day(s).'] }
+    help: { slot: 53, material: BOOK, name: '&bHow Parcels Work', lore: ['Put items in the top 5 rows.', 'The recipient gets them in their', 'mailbox, even when offline.', '', '&7Unclaimed parcels come back', '&7after &f%days%&7.'] }

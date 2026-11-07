@@ -200,6 +200,8 @@ admin:
   removed: '&aRemoved that mail. %what%'
   removed-returned: '&7The items went back to the sender.'
   remove-failed: '&cThat mail changed in the meantime; nothing was removed.'
+  streak-usage: '&cUsage: /mail admin streak <player> <days> (0 starts over)'
+  streak-set: '&aDaily streak of &f%player% &aset to &f%streak%&a. Their next reward continues from there.'
   block-added: '&aThis block now opens the mailbox.'
   block-removed: '&aThis block no longer opens the mailbox.'
   block-none: '&cLook at a block within 5 blocks first.'
@@ -215,6 +217,7 @@ admin:
     - ' &e/mail admin view <player> &8- &7inspect and remove a player''s mail'
     - ' &e/mail admin info &8- &7storage, hooks and counts'
     - ' &e/mail admin purge <days> &8- &7delete old finished mail'
+    - ' &e/mail admin streak <player> <days> &8- &7set a daily streak (for example after an outage)'
     - ' &e/mail admin setblock|removeblock &8- &7mailbox blocks'
     - ' &e/mail reload &8- &7reload the configuration'
 

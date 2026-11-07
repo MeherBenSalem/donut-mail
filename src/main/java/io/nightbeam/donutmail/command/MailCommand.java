@@ -792,8 +792,37 @@ public final class MailCommand implements CommandExecutor, TabCompleter {
                 });
             }
             case "setblock", "removeblock" -> mailboxBlock(sender, action.equals("setblock"));
+            case "streak" -> streak(sender, args);
             default -> messages().sendList(sender, "admin.help");
         }
+    }
+
+    /** Sets a daily streak as if the last reward came yesterday, so the next join continues from it. */
+    private void streak(CommandSender sender, String[] args) {
+        int streak;
+        try {
+            streak = Integer.parseInt(args.length > 3 ? args[3] : "x");
+        } catch (NumberFormatException invalid) {
+            messages().send(sender, "admin.streak-usage");
+            return;
+        }
+        if (args.length < 3 || streak < 0) {
+            messages().send(sender, "admin.streak-usage");
+            return;
+        }
+        int value = streak;
+        resolveTarget(args[2]).thenAccept(found -> {
+            if (found.isEmpty()) {
+                messages().send(sender, "general.unknown-player", "player", args[2]);
+                return;
+            }
+            long yesterday = plugin.dailyRewards().today() - 1;
+            plugin.scheduler().run(() -> plugin.storage().setDaily(found.get().id(), value == 0 ? -1 : yesterday, value)).thenRun(() -> {
+                plugin.audit().log("STREAK_SET", "player", found.get().name(), "streak", value, "by", sender.getName());
+                plugin.summaries().refresh(found.get().id());
+                messages().send(sender, "admin.streak-set", "player", found.get().name(), "streak", String.valueOf(value));
+            });
+        });
     }
 
     private void info(CommandSender sender) {
@@ -873,7 +902,7 @@ public final class MailCommand implements CommandExecutor, TabCompleter {
                     return filter(args[1], List.of("send", "sendall"));
                 }
                 case "admin" -> {
-                    return filter(args[1], List.of("view", "info", "purge", "setblock", "removeblock"));
+                    return filter(args[1], List.of("view", "info", "purge", "streak", "setblock", "removeblock"));
                 }
                 case "announce" -> {
                     return filter(args[1], List.of("hand", "money:", "voucher:", "start:", "end:", "name:", "permission:"));
@@ -892,7 +921,7 @@ public final class MailCommand implements CommandExecutor, TabCompleter {
                     return filter(args[2], List.of("hand", "item", "voucher", "money"));
                 }
                 case "admin" -> {
-                    if (args[1].equalsIgnoreCase("view")) return filter(args[2], playerNames(sender));
+                    if (args[1].equalsIgnoreCase("view") || args[1].equalsIgnoreCase("streak")) return filter(args[2], playerNames(sender));
                     if (args[1].equalsIgnoreCase("purge")) return filter(args[2], List.of("30", "60", "90"));
                     return List.of();
                 }

@@ -24,12 +24,12 @@ public final class Settings {
     public final String serverIdSetting;
     public final int pollSeconds;
 
-    public final int mailExpireDays;
+    public final double mailExpireDays;
     public final int expiryScanSeconds;
     public final int historyRetentionDays;
 
     public final boolean parcelsEnabled;
-    public final int parcelExpireDays;
+    public final double parcelExpireDays;
     public final boolean returnToSender;
     public final boolean allowRecall;
     public final boolean allowSelf;
@@ -100,12 +100,12 @@ public final class Settings {
         this.serverIdSetting = config.getString("network.server-id", "");
         this.pollSeconds = Math.max(1, config.getInt("network.poll-interval-seconds", 3));
 
-        this.mailExpireDays = Math.max(0, config.getInt("mail.expire-days", 30));
+        this.mailExpireDays = Math.max(0, config.getDouble("mail.expire-days", 30));
         this.expiryScanSeconds = Math.max(5, config.getInt("mail.expiry-scan-seconds", 60));
         this.historyRetentionDays = Math.max(0, config.getInt("mail.history-retention-days", 60));
 
         this.parcelsEnabled = config.getBoolean("parcels.enabled", true);
-        this.parcelExpireDays = Math.max(0, config.getInt("parcels.expire-days", 7));
+        this.parcelExpireDays = Math.max(0, config.getDouble("parcels.expire-days", 7));
         this.returnToSender = config.getBoolean("parcels.return-to-sender", true);
         this.allowRecall = config.getBoolean("parcels.allow-recall", true);
         this.allowSelf = config.getBoolean("parcels.allow-self", false);
@@ -195,10 +195,10 @@ public final class Settings {
     }
 
     public long serverMailExpiry(long now) {
-        return mailExpireDays <= 0 ? 0 : now + mailExpireDays * 86_400_000L;
+        return mailExpireDays <= 0 ? 0 : now + Math.round(mailExpireDays * 86_400_000d);
     }
 
     public long parcelExpiry(long now) {
-        return parcelExpireDays <= 0 ? 0 : now + parcelExpireDays * 86_400_000L;
+        return parcelExpireDays <= 0 ? 0 : now + Math.round(parcelExpireDays * 86_400_000d);
     }
 }

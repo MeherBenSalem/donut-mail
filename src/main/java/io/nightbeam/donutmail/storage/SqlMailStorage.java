@@ -1023,6 +1023,22 @@ public final class SqlMailStorage implements MailStorage {
     }
 
     @Override
+    public void setDaily(UUID player, long day, int streak) {
+        tx(c -> {
+            Binder binder = s -> {
+                s.setLong(1, day);
+                s.setInt(2, streak);
+                s.setString(3, player.toString());
+            };
+            if (update(c, "UPDATE donutmail_players SET daily_day = ?, daily_streak = ? WHERE uuid = ?", binder) == 0) {
+                insertPlayer(c, player, null, System.currentTimeMillis());
+                update(c, "UPDATE donutmail_players SET daily_day = ?, daily_streak = ? WHERE uuid = ?", binder);
+            }
+            return null;
+        });
+    }
+
+    @Override
     public void setAcceptParcels(UUID player, boolean accept) {
         tx(c -> {
             int rows = update(c, "UPDATE donutmail_players SET accept_parcels = ? WHERE uuid = ?", s -> {

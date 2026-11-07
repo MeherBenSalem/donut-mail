@@ -73,7 +73,7 @@ public final class ComposeGui extends BaseGui {
         button("send", "player", name, "count", String.valueOf(stacks),
                 "cod", codPrice > 0 ? Text.trusted(Text.substitute(gui.text("compose.buttons.cod-line"), "price", plugin.economy().format(codPrice))) : "",
                 "postage", fee > 0 ? Text.trusted(Text.substitute(gui.text("compose.buttons.postage-line"), "fee", plugin.economy().format(fee))) : "");
-        button("help", "days", String.valueOf(plugin.settings().parcelExpireDays));
+        button("help", "days", io.nightbeam.donutmail.util.Durations.format(Math.round(plugin.settings().parcelExpireDays * 86_400_000d)));
         ItemStack pane = gui.filler();
         for (int slot = 0; slot < inventory.getSize(); slot++) {
             if (!itemSlots.contains(slot) && inventory.getItem(slot) == null && pane != null) inventory.setItem(slot, pane);

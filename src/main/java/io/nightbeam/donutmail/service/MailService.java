@@ -203,6 +203,7 @@ public final class MailService {
             player.getWorld().dropItemNaturally(player.getLocation(), item);
         }
         writeReceipt(player, token, delivered);
+        crashTest(player);
 
         List<String> remaining = new ArrayList<>();
         List<ItemStack> handed = new ArrayList<>();
@@ -273,6 +274,19 @@ public final class MailService {
             }
             Rewards.dispatch(commands, name, uuid, plugin.getLogger());
         });
+    }
+
+    /**
+     * Test only: with -Ddonutmail.test.crash-after-delivery=save|nosave the server stops dead right after a
+     * delivery, before the claim is saved, to prove that recovery neither loses nor duplicates anything.
+     * "save" writes the player's data first (as an autosave would), "nosave" does not.
+     */
+    private void crashTest(Player player) {
+        String mode = System.getProperty("donutmail.test.crash-after-delivery", "");
+        if (mode.isEmpty()) return;
+        if (mode.equals("save")) player.saveData();
+        plugin.getLogger().severe("[crash test] stopping the server right after a delivery (" + mode + ")");
+        Runtime.getRuntime().halt(137);
     }
 
     // ── Receipts in the player's save data ──────────────────────────────────

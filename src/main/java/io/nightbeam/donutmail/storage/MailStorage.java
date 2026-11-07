@@ -149,6 +149,9 @@ public interface MailStorage extends AutoCloseable {
      */
     boolean deliverDaily(UUID player, long expectedDay, long newDay, int newStreak, MailRecord reward);
 
+    /** Staff: sets a player's daily day and streak (creates the record when missing). */
+    void setDaily(UUID player, long day, int streak);
+
     void setAcceptParcels(UUID player, boolean accept);
 
     boolean block(BlockEntry entry);
