@@ -469,16 +469,21 @@ export async function coreScenario({ target, step, port, java, result }) {
     await check(step, 'anti-spam: cooldown and parcels per recipient', async () => {
       await sleep(3200);
       await server.lab('give Alice STICK 4');
+      await server.lab('give Alice FEATHER 4');
+      await server.lab('give Alice STRING 4');
       await sleep(400);
       await sendParcel(alice, 'Carol', 'stick');
       await sleep(300);
-      const cooldown = await sendParcel(alice, 'Carol', 'stick', { expect: /Wait \d+s/ });
+      const cooldown = await sendParcel(alice, 'Carol', 'feather', { expect: /Wait \d+s/ });
       close(alice);
       await server.lab('parcel Alice Carol STICK 1 0');
       await server.lab('parcel Alice Carol STICK 1 0');
       await sleep(3500);
-      const limit = await sendParcel(alice, 'Carol', 'stick', { expect: /already have 3 parcels waiting/ });
+      const limit = await sendParcel(alice, 'Carol', 'string', { expect: /already have 3 parcels waiting/ });
       close(alice);
+      await sleep(800);
+      const kept = await count(server, 'Alice', 'FEATHER') + await count(server, 'Alice', 'STRING');
+      expectEq(kept, 8, 'refused items back with the sender');
       return `${cooldown.replace(/.*» /, '')}; ${limit.replace(/.*» /, '').slice(0, 50)}`;
     });
 
@@ -535,6 +540,14 @@ export async function coreScenario({ target, step, port, java, result }) {
 
     await check(step, '/mail reload', async () => (await server.run('mail reload', /DonutMail reloaded/)).replace(/.*INFO\]: /, '').slice(0, 60));
 
+    await check(step, 'API events fired', async () => {
+      const line = await server.lab('events');
+      for (const name of ['claim', 'send', 'daily', 'code', 'returned-declined']) {
+        if (!new RegExp(`\\b${name}=\\d+`).test(line)) throw new Error(`missing ${name}: ${line}`);
+      }
+      return line.replace('events ', '').slice(0, 150);
+    });
+
     // Restart: everything persists, campaign claims stay claimed, and the streak continues.
     const beforeBob = await mails(server, 'Bob');
     const beforeCarol = await mails(server, 'Carol');
@@ -551,7 +564,8 @@ export async function coreScenario({ target, step, port, java, result }) {
     await check(step, 'mail survives the restart', async () => {
       const afterBob = await mails(server, 'Bob');
       const afterCarol = await mails(server, 'Carol');
-      if (afterBob.replace(/PENDING:DAILY=\d+,?/, '') !== beforeBob.replace(/PENDING:DAILY=\d+,?/, '') || afterCarol !== beforeCarol) {
+      const strip = (value) => value.replace(/PENDING:DAILY=\d+,?/, '').replace(/^none$/, '').replace(/,$/, '');
+      if (strip(afterBob) !== strip(beforeBob) || afterCarol !== beforeCarol) {
         throw new Error(`Bob ${beforeBob} -> ${afterBob}; Carol ${beforeCarol} -> ${afterCarol}`);
       }
       return `Bob: ${afterBob}`;
@@ -596,14 +610,6 @@ export async function coreScenario({ target, step, port, java, result }) {
         return expectEq(await count(server, 'Bob', 'DIAMOND'), 1, 'vote diamond');
       });
     }
-
-    await check(step, 'API events fired', async () => {
-      const line = await server.lab('events');
-      for (const name of ['claim', 'send', 'daily', 'code', 'returned-declined']) {
-        if (!new RegExp(`\\b${name}=\\d+`).test(line)) throw new Error(`missing ${name}: ${line}`);
-      }
-      return line.replace('events ', '').slice(0, 150);
-    });
 
     if (extras.includes('crash')) {
       await crashTests({ server, step, join, leave, bots });
