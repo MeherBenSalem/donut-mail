@@ -151,7 +151,8 @@ jobs:
                 changelog,
                 changelogType: 'markdown',
                 displayName: path.basename(jar),
-                gameVersionNames: gvs,
+                // Minecraft versions plus the server platforms, as DonutRTP's plugin uploads tag them.
+                gameVersionNames: [...gvs, 'Paper', 'Purpur', 'Folia', 'Server'],
                 releaseType: 'release',
               };
               const cfForm = new FormData();
