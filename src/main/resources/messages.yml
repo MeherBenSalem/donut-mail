@@ -130,6 +130,7 @@ mail:
 
 codes:
   usage: '&cUsage: /mail redeem <code>'
+  prompt: '&eType the code in chat. Type &6cancel &eto go back.'
   redeemed: '&aCode &f%code% &aredeemed! Your reward is in the Rewards tab.'
   unknown: '&cThat code does not exist.'
   disabled: '&cThat code is not active.'

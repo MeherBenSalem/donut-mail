@@ -6,7 +6,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * @deprecated Use {@link DonutMailAPI}. Kept for one release so dependents keep compiling.
+ * @deprecated Use {@link DonutMailAPI}. Kept so plugins written for PostMaster keep working.
  */
 @Deprecated(since = "1.1.0", forRemoval = true)
 public final class PostMasterAPI {

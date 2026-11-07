@@ -312,7 +312,7 @@ public final class MailboxGui extends BaseGui {
     }
 
     private void redeemPrompt() {
-        plugin.guiManager().prompts().ask(player, "codes.usage", code -> plugin.codes().redeem(player, code).thenAccept(outcome ->
+        plugin.guiManager().prompts().ask(player, "codes.prompt", code -> plugin.codes().redeem(player, code).thenAccept(outcome ->
                 plugin.scheduler().atPlayer(player, () -> {
                     redeemFeedback(plugin, player, outcome, code);
                     plugin.guiManager().openMailbox(player, MailKind.Tab.REWARDS);

@@ -70,6 +70,11 @@ public final class MailCommand implements CommandExecutor, TabCompleter {
         return false;
     }
 
+    /** How a staff sender appears on mail: their name, or "Server" for the console. */
+    private static String from(CommandSender sender) {
+        return sender instanceof Player ? sender.getName() : "Server";
+    }
+
     private boolean admin(CommandSender sender) {
         if (has(sender, "donutmail.admin")) return true;
         messages().send(sender, "general.no-permission");
@@ -417,7 +422,7 @@ public final class MailCommand implements CommandExecutor, TabCompleter {
         }
         String message = args.length > next ? String.join(" ", Arrays.copyOfRange(args, next, args.length))
                 : contents.voucher() != null ? messages().format("mail.voucher", "voucher", contents.voucher())
-                : messages().format("mail.give", "sender", sender.getName());
+                : messages().format("mail.give", "sender", from(sender));
         deliverTo(sender, target, message, contents);
     }
 
@@ -427,7 +432,7 @@ public final class MailCommand implements CommandExecutor, TabCompleter {
         if (token.equals("all")) {
             long now = System.currentTimeMillis();
             String name = "give-" + Long.toString(now, 36);
-            Campaign campaign = new Campaign(UUID.randomUUID(), name, sender.getName(), message, contents.items(), contents.money(),
+            Campaign campaign = new Campaign(UUID.randomUUID(), name, from(sender), message, contents.items(), contents.money(),
                     contents.voucher(), List.of(), 0, 0, now, sender.getName(), 0, null, true);
             plugin.campaigns().create(campaign).thenAccept(ok -> messages().send(sender, ok ? "admin.give-all" : "admin.campaign-exists",
                     "name", name));
@@ -470,7 +475,7 @@ public final class MailCommand implements CommandExecutor, TabCompleter {
 
     private MailRecord delivery(CommandSender sender, UUID id, String name, String message, Contents contents) {
         MailKind kind = contents.empty() ? MailKind.MESSAGE : MailKind.DELIVERY;
-        return plugin.mail().serverMail(kind, id, sender.getName()).receiverName(name).message(message).items(contents.items())
+        return plugin.mail().serverMail(kind, id, from(sender)).receiverName(name).message(message).items(contents.items())
                 .money(contents.money()).voucherId(contents.voucher()).build();
     }
 
@@ -546,7 +551,7 @@ public final class MailCommand implements CommandExecutor, TabCompleter {
             return;
         }
         String name = forcedName != null ? forcedName : options.getOrDefault("name", "campaign-" + Long.toString(now, 36));
-        String senderName = options.getOrDefault("sender", sender instanceof Player ? sender.getName() : "Server");
+        String senderName = options.getOrDefault("sender", from(sender));
         Campaign campaign = new Campaign(UUID.randomUUID(), name, senderName, String.join(" ", rest), contents.items(), contents.money(),
                 contents.voucher(), List.of(), start, end, now, sender.getName(), 0, options.get("permission"), existingOnly);
         plugin.campaigns().create(campaign).thenAccept(ok -> {
