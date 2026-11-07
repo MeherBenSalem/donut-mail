@@ -190,6 +190,17 @@ public final class MailLabPlugin extends JavaPlugin implements Listener {
                     DonutMailAPI.deliver(delivery.build()).whenComplete((id, failure) ->
                             report(failure == null ? "deliver " + id : "error deliver -> " + failure));
                 }
+                case "bulk" -> {
+                    // lab bulk <player> <count>: that many separate deliveries (paging).
+                    OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
+                    int count = Integer.parseInt(args[2]);
+                    List<java.util.concurrent.CompletableFuture<java.util.UUID>> futures = new ArrayList<>();
+                    for (int i = 1; i <= count; i++) {
+                        futures.add(DonutMailAPI.deliver(Delivery.to(target.getUniqueId()).sender("MailLab").message("Letter " + i).build()));
+                    }
+                    java.util.concurrent.CompletableFuture.allOf(futures.toArray(new java.util.concurrent.CompletableFuture[0]))
+                            .whenComplete((ignored, failure) -> report(failure == null ? "bulk " + count : "error bulk -> " + failure));
+                }
                 case "parcel" -> {
                     // lab parcel <from> <to> <material> <amount> <cod price>: a player parcel through the API.
                     OfflinePlayer from = Bukkit.getOfflinePlayer(args[1]);

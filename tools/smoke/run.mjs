@@ -36,10 +36,10 @@ export const MATRIX = [
     extras: ['votes', 'discord', 'crash'] },
   { name: 'folia-1.21.11', kind: 'core', project: 'folia', version: '1.21.11', java: 21, bot: '1.21.11', economy: 'lab', storage: 'SQLITE' },
   { name: 'paper-26.3', kind: 'core', project: 'paper', version: '26.3', java: 25, bot: '26.1', via: true, economy: 'essentials', storage: 'MYSQL' },
-  { name: 'folia-26.3', kind: 'core', project: 'folia', version: '26.3', java: 25, bot: '26.1', via: true, economy: 'lab', storage: 'YAML' },
+  { name: 'folia-26.3', kind: 'core', project: 'folia', version: '26.3', java: 25, bot: '26.1', via: true, economy: 'lab', storage: 'SQLITE' },
   { name: 'network-paper-1.21.11', kind: 'network', project: 'paper', version: '1.21.11', java: 21, bot: '1.21.11', economy: 'lab', storage: 'MYSQL' },
   { name: 'upgrade-paper-26.3', kind: 'upgrade', project: 'paper', version: '26.3', java: 25, bot: '26.1', via: true, economy: 'lab' },
-  { name: 'folia-1.20.1', kind: 'core', project: 'folia', version: '1.20.1', java: 17, bot: '1.20.1', economy: 'lab', storage: 'SQLITE', short: true },
+  { name: 'folia-1.20.1', kind: 'core', project: 'folia', version: '1.20.1', java: 17, bot: '1.20.1', economy: 'lab', storage: 'YAML' },
 ];
 
 export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

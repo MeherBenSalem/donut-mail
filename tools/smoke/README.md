@@ -10,10 +10,10 @@ economy bridge and the real storage.
 | Paper 1.21.11 | 21 | 1.21.11 | Vault + EssentialsX | SQLite (+ NuVotifier, Discord webhook, crash tests) |
 | Folia 1.21.11 | 21 | 1.21.11 | VaultUnlocked + fixture economy | SQLite |
 | Paper 26.3 | 25 | 26.1 through ViaVersion + ViaBackwards | Vault + EssentialsX | MySQL/MariaDB |
-| Folia 26.3 | 25 | 26.1 through ViaVersion + ViaBackwards | VaultUnlocked + fixture economy | YAML |
-| Folia 1.20.1 | 17 | 1.20.1 | VaultUnlocked + fixture economy | SQLite |
+| Folia 26.3 | 25 | 26.1 through ViaVersion + ViaBackwards | VaultUnlocked + fixture economy | SQLite |
+| Folia 1.20.1 | 17 | 1.20.1 | VaultUnlocked + fixture economy | YAML |
 | Network: 2 × Paper 1.21.11 | 21 | 1.21.11 | VaultUnlocked + fixture economy | one MySQL/MariaDB database |
-| Upgrade: Paper 26.3 | 25 | 26.1 via ViaBackwards | VaultUnlocked | 1.1.0 YAML and SQLite data, then 2.0.0 |
+| Upgrade: Paper 26.3 | 25 | 26.1 via ViaBackwards | VaultUnlocked | 1.1.0 YAML data, then 2.0.0 |
 
 EssentialsX does not load on Folia, so Folia targets use VaultUnlocked with the fixture's in-memory economy.
 
@@ -48,8 +48,9 @@ The network target runs two servers on one database: a parcel sent on one server
 three rounds of pay-vs-take-back across the two servers each have exactly one winner, a campaign is claimed once
 per player across both servers, and the daily reward is delivered once per player per day.
 
-The upgrade target runs DonutMail 1.1.0 (`DONUTMAIL_110_JAR`) on YAML and on SQLite, sends an item mail through
-the 1.1.0 menu, a text mail and a voucher, swaps in 2.0.0 and claims the 1.1.0 mail.
+The upgrade target runs DonutMail 1.1.0 (`DONUTMAIL_110_JAR`) on YAML, sends an item mail through the 1.1.0 menu,
+a text mail and a voucher, swaps in 2.0.0 and claims the 1.1.0 mail. (1.1.0's own SQLite and MySQL storage do not
+start on Paper 26.3, so 1.1.0 data for those is covered by the unit tests, which build the exact 1.1.0 tables.)
 
 ## Running it
 

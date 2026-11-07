@@ -28,6 +28,7 @@
 ### Fixed
 - Shutting down no longer rewrites the whole mail table (1.x deleted and re-inserted every row on each stop, which could overwrite other servers' mail on a shared MySQL database).
 - Items left in the send menu are never dropped on the ground; what does not fit goes to the player's own mailbox.
+- SQLite storage did not start on Paper 26.3 in 1.1.0 ("Failed to get driver instance"); the driver is now loaded explicitly.
 
 ### Upgrade
 - Replace the jar and restart. 1.x mail (YAML, SQLite, MySQL), vouchers and permissions are kept; the texts 1.x kept in `config.yml` move to `messages.yml`. PostMaster data is still migrated.

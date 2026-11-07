@@ -65,21 +65,30 @@ function countIn(window, name, from = 9, to = 44) {
   return n;
 }
 
-/** Readable text of a chat component (JSON string or object) for window dumps. */
+/** Readable text of a chat component (JSON string, object or NBT-typed object) for window dumps. */
+function deepSimplify(v) {
+  if (Array.isArray(v)) return v.map(deepSimplify);
+  if (v && typeof v === 'object') {
+    if (typeof v.type === 'string' && 'value' in v && Object.keys(v).length <= 2) {
+      if (v.type === 'list') return deepSimplify(v.value?.value ?? []);
+      if (v.type === 'compound') return deepSimplify(v.value);
+      return deepSimplify(v.value);
+    }
+    return Object.fromEntries(Object.entries(v).map(([k, x]) => [k, deepSimplify(x)]));
+  }
+  return v;
+}
+
 function plainText(value) {
   if (value == null) return '';
   let node = value;
   if (typeof value === 'string') {
     try { node = JSON.parse(value); } catch { return value; }
   }
-  if (typeof node === 'string') return node;
+  node = deepSimplify(node);
+  if (typeof node === 'string' || typeof node === 'number') return String(node);
   if (Array.isArray(node)) return node.map(plainText).join('');
-  if (node.type === 'compound' && node.value) {
-    const simplify = (v) => (v && v.type ? (v.type === 'list' ? v.value.value.map(simplify) : v.type === 'compound'
-      ? Object.fromEntries(Object.entries(v.value).map(([k, x]) => [k, simplify(x)])) : v.value) : v);
-    return plainText(simplify(node));
-  }
-  let out = node.text ?? node[''] ?? (node.translate ? `[${node.translate}]` : '');
+  let out = node.text != null ? plainText(node.text) : node[''] != null ? plainText(node['']) : (node.translate ? `[${node.translate}]` : '');
   if (Array.isArray(node.extra)) out += node.extra.map(plainText).join('');
   return out;
 }
@@ -614,6 +623,26 @@ export async function coreScenario({ target, step, port, java, result }) {
       return `${expectEq(await count(server, 'Alice', 'BONE'), 3, 'bones back')} after ${Math.round((Date.now() - expiringSent) / 1000)}s`;
     });
 
+    await check(step, 'paging (40 letters) and player-name tab completion', async () => {
+      await server.lab('bulk Carol 40');
+      await sleep(1000);
+      const page1 = await openTab(carol, '/mail');
+      dumpWindow(page1, 'Inbox page 1 of a full mailbox', windows);
+      if (page1.slots[53]?.name !== 'arrow') throw new Error(`next arrow is ${page1.slots[53]?.name}`);
+      const onPage1 = countIn(page1, 'paper');
+      // The page changes in place (same window), so read the slots again.
+      await carol.clickWindow(53, 0, 0);
+      await sleep(1000);
+      const view = carol.currentWindow;
+      const onPage2 = countIn(view, 'paper');
+      if (view.slots[45]?.name !== 'arrow') throw new Error('no previous arrow on page 2');
+      const names = await carol.tabComplete('/mail send Al');
+      const listed = names.map((n) => (typeof n === 'string' ? n : n.match)).filter(Boolean);
+      if (!listed.includes('Alice')) throw new Error(`tab completion: ${JSON.stringify(listed)}`);
+      close(carol);
+      return `${onPage1} on page 1, ${onPage2} on page 2; /mail send Al<tab> -> ${listed.join(', ')}`;
+    });
+
     await check(step, 'PlaceholderAPI values', async () => {
       const line = await server.run('papi parse Bob %donutmail_unread%|%donutmail_parcels%|%donutmail_cod%|%donutmail_daily_streak%|%donutmail_daily_next_day%',
         /\b\d+\|\d+\|\d+\|1\|\d+\s*$/);
@@ -833,6 +862,9 @@ export async function networkScenario({ target, step, port, java, result }) {
   resetDatabase('donutmail_net');
   const a = await prepareServer(target, `${target.name}-alpha`, port, { storage: 'MYSQL', database: 'donutmail_net', serverId: 'alpha' });
   const b = await prepareServer(target, `${target.name}-beta`, port + 1, { storage: 'MYSQL', database: 'donutmail_net', serverId: 'beta' });
+  // Postage on beta: 5 per parcel plus 1 per stack.
+  const betaConfig = path.join(b.dir, 'plugins', 'DonutMail', 'config.yml');
+  fs.writeFileSync(betaConfig, fs.readFileSync(betaConfig, 'utf8').replace('  max-pending-per-recipient: 3', '  max-pending-per-recipient: 3\n  postage:\n    enabled: true\n    flat: 5\n    per-stack: 1'));
   result.server = `${target.project} ${target.version} build ${a.build} x2, MariaDB`;
   const alpha = new Server(a.dir, java, a.jar, port);
   const beta = new Server(b.dir, java, b.jar, port + 1);
@@ -846,10 +878,14 @@ export async function networkScenario({ target, step, port, java, result }) {
     bots.push(alice);
     await alpha.lab('money Bob 1000');
     await check(step, 'parcel sent on beta reaches Bob on alpha (live notice)', async () => {
+      await beta.lab('money Alice 100');
       await beta.lab('give Alice DIAMOND 2');
       await sleep(400);
       mark(bob);
+      mark(alice);
       await sendParcel(alice, 'Bob', 'diamond');
+      const postage = await waitChat(alice, /Postage/);
+      expectEq(await balance(beta, 'Alice'), 94, 'Alice after postage (5 + 1 per stack)');
       const started = Date.now();
       await waitChat(bob, /sent you a parcel/, 15_000);
       const parcels = await openTab(bob, '/mail parcels');
@@ -857,7 +893,7 @@ export async function networkScenario({ target, step, port, java, result }) {
       await bob.clickWindow(slotOf(parcels, 'chest'), 0, 0);
       await waitChat(bob, /Claimed/);
       await sleep(500);
-      return `${expectEq(await count(alpha, 'Bob', 'DIAMOND'), 2, 'diamonds on alpha')}, notice after ${Date.now() - started} ms`;
+      return `${expectEq(await count(alpha, 'Bob', 'DIAMOND'), 2, 'diamonds on alpha')}, notice after ${Date.now() - started} ms, ${postage.replace(/.*» /, '')}`;
     });
     await check(step, 'cash on delivery across servers: pay on alpha vs take back on beta, one winner', async () => {
       const wins = { pay: 0, back: 0 };
@@ -872,7 +908,10 @@ export async function networkScenario({ target, step, port, java, result }) {
         await waitWindow(alice, () => alice.clickWindow(9, 0, 0));
         mark(bob);
         mark(alice);
-        await Promise.all([bob.clickWindow(47, 0, 0), alice.clickWindow(51, 0, 0)]);
+        // Round 0 clicks together; later rounds give the take-back a head start of a few milliseconds, so both
+        // outcomes get exercised. Either way only the database decides who wins.
+        const head = [0, 40, 120][round];
+        await Promise.all([sleep(head).then(() => bob.clickWindow(47, 0, 0)), alice.clickWindow(51, 0, 0)]);
         await sleep(4000);
         const paid = bob.chatLog.slice(bob.chatCursor).some((l) => /You paid/.test(l));
         const back = alice.chatLog.slice(alice.chatCursor).some((l) => /is back in your mailbox/.test(l));
@@ -930,7 +969,10 @@ export async function networkScenario({ target, step, port, java, result }) {
 export async function upgradeScenario({ target, step, port, java, result }) {
   const oldJar = process.env.DONUTMAIL_110_JAR;
   if (!oldJar || !fs.existsSync(oldJar)) throw new Error('set DONUTMAIL_110_JAR to a DonutMail 1.1.0 jar');
-  for (const storage of ['YAML', 'SQLITE']) {
+  // 1.1.0's own SQLite and MySQL storage do not start on Paper 26.3 ("Failed to get driver instance": its
+  // pool looks the driver up through DriverManager, which cannot see it), so live 1.1.0 data can only be
+  // made on YAML. The 1.1.0 SQLite and MySQL schemas are upgraded in the unit tests.
+  for (const storage of (process.env.MAILLAB_UPGRADE_STORAGES || 'YAML').split(',')) {
     // 1.1.0 runs without the fixture (it is built against 2.0); it is added with the 2.0.0 jar.
     const prepared = await prepareServer(target, `${target.name}-${storage.toLowerCase()}`, port, { donutJar: oldJar, config: false, fixture: false });
     result.server = `${target.project} ${target.version} build ${prepared.build}`;
@@ -980,14 +1022,18 @@ export async function upgradeScenario({ target, step, port, java, result }) {
       await check(step, `1.1.0 mail listed and claimable in 2.0.0 (${storage})`, async () => {
         const listed = await mails(server, 'Bob');
         const inbox = await openTab(bob2, '/mail');
-        const chest = slotOf(inbox, 'chest');
-        const paper = countIn(inbox, 'paper');
-        if (chest < 0) throw new Error(`item mail not listed: ${listed}`);
+        dumpWindow(inbox, 'Inbox with mail from DonutMail 1.1.0', path.join(prepared.dir, 'windows.txt'));
+        const chests = countIn(inbox, 'chest');
+        const papers = countIn(inbox, 'paper');
+        if (chests !== 2 || papers !== 1) throw new Error(`expected 2 deliveries (items, voucher) and 1 message, got ${chests}/${papers}: ${listed}`);
+        close(bob2);
         mark(bob2);
-        await bob2.clickWindow(chest, 0, 0);
-        await waitChat(bob2, /Claimed/);
-        await sleep(600);
-        return `${listed}; ${expectEq(await count(server, 'Bob', 'DIAMOND'), 3, 'diamonds from 1.1.0')}, ${paper} text/voucher mail shown`;
+        await say(bob2, '/mail claimall');
+        const claimed = await waitChat(bob2, /Claimed \d+ mail/);
+        await sleep(800);
+        const left = await mails(server, 'Bob');
+        if (/DELIVERY/.test(left)) throw new Error(`still waiting: ${left}`);
+        return `${listed}; ${claimed.replace(/.*» /, '')}, ${expectEq(await count(server, 'Bob', 'DIAMOND'), 3, 'diamonds from 1.1.0')}`;
       });
       await check(step, `config.yml migrated, messages.yml created (${storage})`, async () => {
         const config = fs.readFileSync(path.join(prepared.dir, 'plugins', 'DonutMail', 'config.yml'), 'utf8');

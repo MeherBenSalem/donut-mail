@@ -28,6 +28,7 @@
 - Stopping the server no longer rewrites the whole mail table. 1.x deleted and re-inserted every row on each stop, which could overwrite mail saved meanwhile by another server on a shared MySQL database.
 - A mail whose items did not all fit could not be claimed at all; now the stacks that fit are handed over and the rest stays.
 - Items in the send menu are no longer dropped on the ground when the inventory is full.
+- SQLite storage did not start on Paper 26.3 in 1.1.0 ("Failed to get driver instance"). The database driver is now loaded explicitly, for SQLite and MySQL.
 
 ## Supported versions
 
