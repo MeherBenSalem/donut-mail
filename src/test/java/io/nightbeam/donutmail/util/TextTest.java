@@ -39,6 +39,12 @@ class TextTest {
     }
 
     @Test
+    void spacesBeforeColorCodesStay() {
+        assertEquals("Streak: 1 day(s)", Text.plain(Text.parse(Text.substitute("&7Streak: &f%streak% &7day(s)", "streak", "1"))));
+        assertEquals("Parcels: 2 (1 cash on delivery)", Text.plain(Text.parse("&7Parcels: &f2 &8(1 cash on delivery)")));
+    }
+
+    @Test
     void malformedTemplatesFallBackToPlainText() {
         assertEquals("<gold unclosed", Text.plain(Text.parse("<gold unclosed")));
     }

@@ -83,15 +83,21 @@ function plainText(value) {
   if (value == null) return '';
   let node = value;
   if (typeof value === 'string') {
+    if (!/^\s*[{["]/.test(value)) return value;
     try { node = JSON.parse(value); } catch { return value; }
   }
-  node = deepSimplify(node);
+  return flatten(deepSimplify(node));
+}
+
+function flatten(node) {
+  if (node == null) return '';
   if (typeof node === 'string' || typeof node === 'number') return String(node);
-  if (Array.isArray(node)) return node.map(plainText).join('');
-  let out = node.text != null ? plainText(node.text) : node[''] != null ? plainText(node['']) : (node.translate ? `[${node.translate}]` : '');
-  if (Array.isArray(node.extra)) out += node.extra.map(plainText).join('');
+  if (Array.isArray(node)) return node.map(flatten).join('');
+  let out = node.text != null ? flatten(node.text) : node[''] != null ? flatten(node['']) : (node.translate ? `[${node.translate}]` : '');
+  if (Array.isArray(node.extra)) out += node.extra.map(flatten).join('');
   return out;
 }
+
 
 /** Writes what a menu shows (names and lore) to windows.txt, to review menus without a client. */
 export function dumpWindow(window, label, file) {
