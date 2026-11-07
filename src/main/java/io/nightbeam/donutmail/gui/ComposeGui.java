@@ -112,6 +112,8 @@ public final class ComposeGui extends BaseGui {
             // The player's own inventory: allowed, except collecting stacks that could pull menu buttons.
             switch (event.getAction()) {
                 case COLLECT_TO_CURSOR -> event.setCancelled(true);
+                // A shift-click moves the stack into the parcel slots, so the Send button's count and postage change.
+                case MOVE_TO_OTHER_INVENTORY -> plugin.scheduler().atPlayerLater(player, this::refreshSendButton, 1L);
                 default -> {
                 }
             }
