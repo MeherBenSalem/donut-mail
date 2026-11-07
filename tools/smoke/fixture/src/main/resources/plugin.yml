@@ -1,0 +1,15 @@
+name: MailLabFixture
+version: 1.0.0
+main: io.nightbeam.maillab.MailLabPlugin
+api-version: '1.20'
+folia-supported: true
+description: Test-only fixture for the DonutMail live tests. Never install on a real server.
+softdepend: [Vault, VaultUnlocked, Essentials]
+loadbefore: [DonutMail]
+commands:
+  lab:
+    description: Live-test helpers.
+    permission: maillab.admin
+permissions:
+  maillab.admin:
+    default: op
