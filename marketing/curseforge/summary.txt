@@ -1,1 +1,1 @@
-A mailbox plugin for Paper and Folia servers that lets players send and receive mail whether they are online or offline.
+A free mailbox for Paper and Folia 1.20.1–26.3: send parcels to offline players, trade safely with cash on delivery, and reward everyone with campaigns, daily streaks and codes.
