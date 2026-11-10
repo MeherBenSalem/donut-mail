@@ -38,3 +38,10 @@ Thumbs.db
 *SUMMARY*
 *COMPLETE*
 graphify-out/
+
+build/
+.gradle/
+run/
+runs/
+*.ipr
+*.iws
