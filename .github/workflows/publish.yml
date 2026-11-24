@@ -12,6 +12,12 @@
 #   CURSEFORGE_ID (1480575)
 #
 # Usage: git tag v2.0.0 && git push --tags
+#
+# Runs only on a v*.*.* tag or by hand; a push to main never releases anything.
+# Same-day guard (NightBeam convention): scripts/same_day_guard.mjs stops the run if DonutMail already had a release
+# today (Africa/Tunis day), on CurseForge or in an earlier Publish run of this repo. It runs first and again right
+# before the upload; a dry run only reports.
+# Prove it first: gh workflow run publish.yml -f version=<version> -f dry_run=true
 
 name: Publish
 
@@ -33,13 +39,35 @@ on:
         required: false
         default: "both"
 
+# One Publish at a time per repo, so two runs can't both pass the same-day guard.
+concurrency:
+  group: publish-${{ github.repository }}
+  cancel-in-progress: false
+
 jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      actions: read
     steps:
       - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Same-day guard
+        env:
+          CURSEFORGE_ID: ${{ vars.CURSEFORGE_ID || '1480575' }}
+          CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
+          GITHUB_TOKEN: ${{ github.token }}
+          PUBLISH_WORKFLOW: publish.yml
+          UPLOAD_STEP: Upload Modrinth + CurseForge|Upload CurseForge
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          node --test scripts/same_day_guard.test.mjs
+          node scripts/same_day_guard.mjs
 
       - name: Resolve version
         id: ver
@@ -79,9 +107,16 @@ jobs:
           printf '%s\n' "${JARS[@]}" >> "$GITHUB_OUTPUT"
           echo "$EOF" >> "$GITHUB_OUTPUT"
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
+      - name: Same-day guard (again, right before upload)
+        if: ${{ inputs.dry_run != 'true' }}
+        env:
+          CURSEFORGE_ID: ${{ vars.CURSEFORGE_ID || '1480575' }}
+          CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
+          GITHUB_TOKEN: ${{ github.token }}
+          PUBLISH_WORKFLOW: publish.yml
+          UPLOAD_STEP: Upload Modrinth + CurseForge|Upload CurseForge
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: node scripts/same_day_guard.mjs
 
       - name: Upload Modrinth + CurseForge
         if: ${{ inputs.dry_run != 'true' }}

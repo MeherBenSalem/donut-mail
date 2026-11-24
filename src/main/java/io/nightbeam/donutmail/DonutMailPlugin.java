@@ -41,6 +41,7 @@ import io.nightbeam.donutmail.storage.StoragePaths;
 import io.nightbeam.donutmail.storage.StorageType;
 import io.nightbeam.donutmail.util.ItemSerializer;
 import io.nightbeam.donutmail.util.Sounds;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -65,6 +66,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
 public final class DonutMailPlugin extends JavaPlugin implements DonutMailAPIBridge {
+
+    /**
+     * bStats plugin ID, also bstats-id in plugin.yml. 0 until the plugin has a bStats page: Metrics stays off.
+     * Server owners opt out in plugins/bStats/config.yml.
+     */
+    static final int BSTATS_ID = 0;
     private volatile Settings settings;
     private volatile Messages messages;
     private volatile GuiConfig gui;
@@ -153,12 +160,24 @@ public final class DonutMailPlugin extends JavaPlugin implements DonutMailAPIBri
         registerPlaceholders();
         startTimers();
         DonutMailAPI.registerBridge(this);
+        startMetrics();
 
         for (Player online : Bukkit.getOnlinePlayers()) {
             PlayerListener.joined(this, online);
         }
         getLogger().info("DonutMail enabled using " + storage.type() + " storage on " + (scheduler.isFolia() ? "Folia" : "Paper")
                 + " (server id " + serverId + ", economy: " + economy.name() + ").");
+    }
+
+    private void startMetrics() {
+        if (BSTATS_ID <= 0) {
+            return;
+        }
+        try {
+            new Metrics(this, BSTATS_ID);
+        } catch (Throwable failure) {
+            getLogger().fine("bStats did not start: " + failure.getMessage());
+        }
     }
 
     @Override

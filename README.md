@@ -21,6 +21,10 @@ Send items to any player, online or offline. Trade safely with cash on delivery.
 - **Integrations**: PlaceholderAPI, a developer API with Bukkit events, Vault or VaultUnlocked.
 - **Safe by design**: every claim, payment, decline, return and expiry is one conditional update that exactly one action can win, on one server or many. A claim interrupted by a crash is finished or undone on the next join, from a receipt in the player's own save data. Items are never deleted silently.
 
+Supported versions: Paper and Folia 1.20 to 26.3, Java 17+ (one jar for all of them).
+
+Metrics: bStats plugin ID not set yet (bStats is wired in but stays off until the plugin has a bStats page).
+
 ## Requirements
 
 - Paper, Folia, Purpur or another Paper fork, **1.20.1–26.3** (plain Spigot/Bukkit lacks Paper's API; the plugin says so and disables itself)
@@ -99,6 +103,14 @@ mvn package            # target/DonutMail-<version>.jar, runs the unit tests
 
 `mvn test` runs the unit tests and the storage contract on YAML and SQLite, including the races (add
 `-Ddonutmail.test.mysql.url=jdbc:mysql://localhost:3306/<db>` with `-Ddonutmail.test.mysql.user`/`.password` for MySQL or MariaDB).
+CI (`.github/workflows/ci.yml`) runs the tests (JUnit 5) on Java 17 and 21 against YAML, SQLite and MySQL on every push to
+`main`, then `python3 scripts/check_plugin_yml.py` (api-version `'1.20'`, `folia-supported`, the bStats ID and Java 17
+bytecode in the built jar) and a smoke boot on Paper 1.20.1, Paper 26.3 and the newest Folia:
+
+```bash
+scripts/smoke_boot.sh paper 26.3 target/DonutMail-<version>.jar
+```
+
 The live matrix on real Paper and Folia servers with network clients is in [`tools/smoke`](tools/smoke/README.md).
 
 Release tagging (Modrinth / CurseForge) uses every loader and Minecraft version in

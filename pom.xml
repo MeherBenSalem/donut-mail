@@ -45,6 +45,7 @@
         <sqlite.version>3.44.0.0</sqlite.version>
         <mysql.version>8.0.33</mysql.version>
         <junit.version>5.11.4</junit.version>
+        <bstats.version>3.1.0</bstats.version>
     </properties>
 
     <repositories>
@@ -123,6 +124,12 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bukkit</artifactId>
+            <version>${bstats.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>${junit.version}</version>
@@ -189,6 +196,10 @@
                                 <relocation>
                                     <pattern>com.mysql</pattern>
                                     <shadedPattern>io.nightbeam.donutmail.libs.mysql</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.bstats</pattern>
+                                    <shadedPattern>io.nightbeam.donutmail.libs.bstats</shadedPattern>
                                 </relocation>
                             </relocations>
                             <filters>
