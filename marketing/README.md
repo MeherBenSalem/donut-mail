@@ -1,12 +1,12 @@
 # Marketing assets: 2.0 "The Post Office Update"
 
-Listing copy and artwork for CurseForge, Modrinth and Hangar. Nothing here ships in the plugin jar.
+Listing copy and artwork for CurseForge (releases are published there only) and Hangar. Nothing here ships in the plugin jar.
 
 ## Listing
 
 | File | Use |
 | --- | --- |
-| [`curseforge/description.md`](curseforge/description.md) | Full project description (Markdown; also works on Modrinth and Hangar) |
+| [`curseforge/description.md`](curseforge/description.md) | Full project description (Markdown; also works on Hangar) |
 | [`curseforge/summary.txt`](curseforge/summary.txt) | Short project summary (180 characters) |
 | [`../DonutMail-2.0.0-PatchNotes.md`](../DonutMail-2.0.0-PatchNotes.md) | File changelog the publish workflow uploads |
 
@@ -125,7 +125,7 @@ NODE_PATH="$(npm root -g)" node marketing/source/render.cjs  # every image, or n
 
 ## Gallery uploads
 
-For the CurseForge and Modrinth galleries, in this order:
+For the CurseForge gallery, in this order:
 
 | # | Image | Title | Description |
 | --- | --- | --- | --- |

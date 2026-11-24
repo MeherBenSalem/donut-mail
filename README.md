@@ -113,7 +113,7 @@ scripts/smoke_boot.sh paper 26.3 target/DonutMail-<version>.jar
 
 The live matrix on real Paper and Folia servers with network clients is in [`tools/smoke`](tools/smoke/README.md).
 
-Release tagging (Modrinth / CurseForge) uses every loader and Minecraft version in
+Releases are published to CurseForge only, and their tags use every Minecraft version in
 [`release/supported-minecraft.json`](release/supported-minecraft.json).
 
 ## Contributing / Security / License

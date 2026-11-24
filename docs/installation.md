@@ -39,6 +39,5 @@ Replace the jar and restart. Mail, settings and messages are kept, and new setti
 
 ## Downloads
 
-- [Modrinth](https://modrinth.com/project/a4rA3S9T)
 - CurseForge (project 1480575)
 - [GitHub](https://github.com/MeherBenSalem/donut-mail)
